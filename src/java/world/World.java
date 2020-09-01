@@ -1,8 +1,13 @@
-public class World{
+package world;
+import java.util.ArrayList;
+import java.util.List;
+
+public class World {
 	private Tile[][] tiles;
 	private List<Building> buildings;
 	private List<Underground> undergrounds;
 	private List<Entity> entities;
+	private static World EMPTY = new World();
 	
 	private World(){}
 	
@@ -14,14 +19,16 @@ public class World{
 	}
 	
 	public static World createNew(){
-		return this.createNew((new java.lang.Random).nextInt());
+		return createNew((new java.util.Random()).nextInt());
 	}
 	public static World createNew(int seed){
 		//TODO
 		//WORLDGEN
+		return World.EMPTY;
 	}
 	public static World load(){
 		//TODO
+		return World.EMPTY;
 	}
 	
 	public Tile getTile(int x, int z){
@@ -32,10 +39,11 @@ public class World{
 		for(Building b : buildings){
 			if(b.getPos().getX() == x && b.getPos().getZ() == z)return b;
 		}
+		return null;
 	}
 	
 	public List<Underground> getUndergrounds(int x, int z){
-		List<Underground> result;
+		List<Underground> result = new ArrayList<>();
 		for(Underground u : undergrounds){
 			if(u.getPos().getX() == x && u.getPos().getZ() == z){
 				result.add(u);
@@ -43,3 +51,12 @@ public class World{
 		}
 		return result;
 	}
+
+	public Entity getEntity(int x, int z){
+		for(Entity e : entities){
+			if(e.getPos().getX() == x && e.getPos().getZ() == z)return e;
+		}
+		return null;
+	}
+
+}
