@@ -28,6 +28,7 @@ public class World {
 	}
 	public static World load(){
 		//TODO
+		//Writing and saving from/to file (JSON?)
 		return World.EMPTY;
 	}
 	
