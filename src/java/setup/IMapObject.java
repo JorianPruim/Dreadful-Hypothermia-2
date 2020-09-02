@@ -2,7 +2,7 @@ package setup;
 
 public interface IMapObject {
 
-    public int getID();
+    //public void render();
     
 
 }
