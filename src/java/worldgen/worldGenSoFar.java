@@ -1,5 +1,7 @@
+package worldgen;
+
 import java.util.*;
-public class HelloWorld{
+public class worldGenSoFar{
 
      public static void heatMap(int size, int maxDropSize, int dropletDensity){
         int[][] map = new int[size][size];
@@ -79,12 +81,20 @@ public class HelloWorld{
         }
         return map;
      }
-     
+
+    /**
+     * This method gives a new map with a circle
+     * @param map original map
+     * @param radius radius of a droplet
+     * @param size
+     * @param maxSize
+     * @return
+     */
      private static int[][] setValueMin (int[][] map, int radius, int size, int maxSize){
         int x = addDroplet(size, maxSize);
         int z = addDroplet(size, maxSize);
-        for(int i = 0-radius; i < radius; i++){
-            for(int j = 0-radius; j < radius; j++){
+        for(int i = -radius; i < radius; i++){
+            for(int j = -radius; j < radius; j++){
                 if(Math.sqrt(Math.abs(Math.pow(i, 2))+Math.abs(Math.pow(j, 2)))<radius){
                     map[Math.abs(i+x)][Math.abs(j+z)] = subtractOrReplace(map[Math.abs(i+x)][Math.abs(j+z)]);
                 }
@@ -100,14 +110,14 @@ public class HelloWorld{
      private static int subtractOrReplace(int in){
          return in>-1?in-1:-1;
      }
-     
+
      private static int addOrReplace(int in){
          return in<1?in+1:1;
      }
      
      
      public static void main(String []args){
-        heatMap(112, 50, 500);
+        heatMap(125, 50, 500);
         System.out.println("\n");
      }
 }
