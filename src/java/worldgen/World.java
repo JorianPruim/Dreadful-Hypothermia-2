@@ -17,6 +17,9 @@ public class World {
         for (int i = 0; i < settings.size; i++) {
             for (int j = 0; j < settings.size; j++) {
 
+                Biome tileBiome = Biome.getBiome(heat.get(i/8,j/8),humidity.get(i/8,j/8));
+
+
             }
         }
 

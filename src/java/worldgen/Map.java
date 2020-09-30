@@ -70,6 +70,10 @@ public class Map{
         return random.nextInt(upper-lower)+lower;
     }
 
+    public int get(int x,int y){
+        return data[x][y];
+    }
+
     /**
      * Gives a string representation of a map. At this point, it replaces all numbers to represent a heatmap.
      * @return a String representation
