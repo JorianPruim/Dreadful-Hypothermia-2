@@ -87,4 +87,8 @@ public class Map{
         }
         return out.toString().replaceAll(","," ").replaceAll("0","N").replaceAll("[0-9]","H").replaceAll("-H","C").replaceAll("H[HN]+","H").replaceAll("C[HN]+","C");
     }
+    
+    public int[][] toIntegerDeepArray(){
+        return data;
+    }
 }
