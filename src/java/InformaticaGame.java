@@ -1,7 +1,4 @@
-import util.NotImplementedException;
-
 import worldgen.Map;
-import worldgen.World;
 
 public class InformaticaGame {
   public static void main(String[] args) {

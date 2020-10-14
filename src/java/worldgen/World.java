@@ -15,13 +15,20 @@ import static java.nio.file.StandardOpenOption.CREATE;
 
 public class World {
 
-    int size;
-    Tile[][] tiles;
+    final int size;
+    final Tile[][] tiles;
     Map heat;
     Map hum;
 
 
-    private World(Tile[][] tiles){this.tiles = tiles; this.size = tiles.length;}
+    private World(Tile[][] tiles){
+        this.tiles = tiles; this.size = tiles.length;
+        for(Tile[] tilerow : tiles){
+            for(Tile tile : tilerow){
+                tile.parent = this;
+            }
+        }
+    }
 
     private static World generate(WorldGenSettings settings){
         Map heat = new Map(settings.size/8,settings.minHeatDropletSize,settings.maxHeatDropletSize,settings.heatDropletDensity);
@@ -30,7 +37,7 @@ public class World {
         for (int i = 0; i < settings.size; i++) {
             for (int j = 0; j < settings.size; j++) {
 
-                Biome tileBiome = Biome.getBiome(heat.get(i/8,j/8),humidity.get(i/8,j/8));
+                //TODO
 
 
             }
