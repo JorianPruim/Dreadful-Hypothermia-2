@@ -1,4 +1,4 @@
-package worldgen;
+package setup.worldgen;
 
 public class WorldGenSettings {
 

@@ -1,4 +1,4 @@
-package world;
+package setup.world;
 
 @SuppressWarnings("ALL")
 public class Entity {

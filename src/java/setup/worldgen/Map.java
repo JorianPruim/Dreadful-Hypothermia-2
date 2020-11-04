@@ -1,13 +1,13 @@
-package worldgen;
+package setup.worldgen;
 
 import java.util.Arrays;
 import java.util.Random;
 
 /**
  *
- * The Map class represents a mapping of a intrinsic tile value to a world.
- * a {@code int} may represent an arbitrary value like heat or humidity to a location on the world.
- * This class is only used for heatmapping and humiditymapping in worldgen
+ * The Map class represents a mapping of a intrinsic tile value to a setup.world.
+ * a {@code int} may represent an arbitrary value like heat or humidity to a location on the setup.world.
+ * This class is only used for heatmapping and humiditymapping in setup.worldgen
  *
  */
 

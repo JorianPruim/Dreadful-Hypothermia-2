@@ -1,25 +1,30 @@
-package sample;
+package fx;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import sample.worldgen.World;
+import setup.worldgen.World;
+import setup.worldgen.WorldGenSettings;
 
 public class Main extends Application {
 
-
     @Override
     public void start(Stage primaryStage) throws Exception{
+
+        World w = World.generate(WorldGenSettings.getInstance());
+
         primaryStage.setTitle("Hello World");
         StackPane layout = new StackPane();
-        primaryStage.setScene(new Scene(layout, 1000, 600));
+        layout.getChildren().add(new Text(w.toString()));
+        primaryStage.setScene(new Scene(layout, 2000, 600));
         primaryStage.show();
     }
 
     public static void main(String[] args) {
-        worldgen.Map test = new worldgen.Map(50,4,8,1e-2);
-        World world = World.of(new worldgen.Map(50,4,8,1e-2).toString());
+
+
         launch(args);
     }
 }

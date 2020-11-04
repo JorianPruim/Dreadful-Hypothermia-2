@@ -1,11 +1,12 @@
-package world;
-
-import worldgen.Biome;
+package setup.world;
 
 public class Tile {
 
-/*    Building building = null;
-    Subterrain sub = null;
+    private Building building;
+    private Subterrain sub;
+    //private int heat;//one implementation possibility
+    //private int hum;
+
 
     public void onPrimaryInteract(Player p){
         if(this.building!=null){
@@ -15,13 +16,16 @@ public class Tile {
     }
     public void onSecondaryInteract(Player p){
         if(this.building!=null){
-            this.building.onPrimaryInteract(p);
+            this.building.onSecondaryInteract(p);
         }
         return;
     }
     private void build(Building b){
-        return;
+        if(this.building == null)this.building = b;
+    }
+    private void destroy(){
+        this.building = null;
     }
 
-*/
+
 }

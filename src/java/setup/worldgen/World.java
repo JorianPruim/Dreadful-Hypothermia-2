@@ -1,10 +1,8 @@
-package worldgen;
+package setup.worldgen;
 
-import world.Tile;
+import setup.world.Tile;
 
-import java.io.BufferedOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -25,12 +23,12 @@ public class World {
         this.tiles = tiles; this.size = tiles.length;
         for(Tile[] tilerow : tiles){
             for(Tile tile : tilerow){
-                tile.parent = this;
+                //System.out.println(tile);
             }
         }
     }
 
-    private static World generate(WorldGenSettings settings){
+    public static World generate(WorldGenSettings settings){
         Map heat = new Map(settings.size/8,settings.minHeatDropletSize,settings.maxHeatDropletSize,settings.heatDropletDensity);
         Map humidity = new Map(settings.size/8,settings.minHumidityDropletSize,settings.maxHumidityDropletSize,settings.humidityDropletDensity);
         Tile[][] tiles = new Tile[settings.size][settings.size];
@@ -59,12 +57,27 @@ public class World {
         return null;
     }
 
-    public static void export(String savename){
+    public static World from(File file){
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String s = reader.readLine();
+            System.out.println(s);
+            return World.of(s);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void export(String savename){
         Path file = null;
-        String out = "Test 123";
+        String out = this.toString();
         byte[] bytes = out.getBytes();
         try{
-            file = Files.createFile(Paths.get("assets/"+savename+".txt"));
+            if(!Files.isDirectory(Path.of("src","assets"))){
+                Files.createDirectory(Path.of("src","assets"));
+            }
+            file = Files.createFile(Paths.get("src","assets",savename));
         }catch (FileAlreadyExistsException e){
             e.printStackTrace();
             //todo: write fileoverwritewarnings and stuff
@@ -72,7 +85,7 @@ public class World {
         }catch (IOException e){
             e.printStackTrace();
             //TODO: write crashreports
-            System.err.println("Something went wrong. Please send the crash report to trashcan@gamewithnoname.com");
+            System.err.println("Something went wrong. Please send the crash report to trashcan@dh2.com");
         }
         if(file!=null){
             try(OutputStream outstream = new BufferedOutputStream(Files.newOutputStream(file,CREATE,APPEND))){
@@ -81,10 +94,13 @@ public class World {
                 e.printStackTrace();
             }
         }else{
-            System.out.println("Empty path");
+            System.err.println("Empty path");
         }
 
     }
 
-
+    @Override
+    public String toString() {
+        return "{"+heat.toString()+","+hum.toString()+"}";
+    }
 }
