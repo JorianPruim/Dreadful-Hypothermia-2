@@ -74,10 +74,10 @@ public class World {
         String out = this.toString();
         byte[] bytes = out.getBytes();
         try{
-            if(!Files.isDirectory(Path.of("src","assets"))){
-                Files.createDirectory(Path.of("src","assets"));
+            if(!Files.isDirectory(Path.of("src","saves"))){
+                Files.createDirectory(Path.of("src","saves"));
             }
-            file = Files.createFile(Paths.get("src","assets",savename));
+            file = Files.createFile(Paths.get("src","saves",savename));
         }catch (FileAlreadyExistsException e){
             e.printStackTrace();
             //todo: write fileoverwritewarnings and stuff
@@ -98,6 +98,8 @@ public class World {
         }
 
     }
+
+
 
     @Override
     public String toString() {
