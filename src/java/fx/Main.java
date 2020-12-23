@@ -35,6 +35,8 @@ public class Main extends Application {
                 visualMap[i][j] = new Text("" + i + j);
                 GridPane.setConstraints(visualMap[i][j], j, i);
                 pane.getChildren().add(visualMap[i][j]);
+                pane.setHgap(10);
+                pane.setVgap(10);
             }
         }
 
