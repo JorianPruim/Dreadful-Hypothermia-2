@@ -29,7 +29,7 @@ public class Main extends Application {
         ScrollPane spane = new ScrollPane();
         GridPane pane = new GridPane();
 
-        Text[][] visualMap = new Text[25][25];
+        Text[][] visualMap = new Text[100][100];
         for(int i = 0; i<visualMap.length; i++){
             for(int j = 0; j<visualMap.length; j++){
                 visualMap[i][j] = new Text("" + i + j);
@@ -37,6 +37,10 @@ public class Main extends Application {
                 pane.getChildren().add(visualMap[i][j]);
             }
         }
+
+        spane.setVvalue(0.5);
+        spane.setHvalue(0.5);
+
 
 //        GridPane.setConstraints(t, 0, 25);
 //        pane.getChildren().add(t);
