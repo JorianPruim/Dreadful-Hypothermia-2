@@ -1,4 +1,4 @@
-package items;
+package objects.items;
 
 public abstract class AbstractTool {
 }
