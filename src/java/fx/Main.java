@@ -16,6 +16,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
 
+
         Map b = new Map(1000,15,25,0.003);
         Text t = new Text(b.toVisualString());
 
@@ -25,6 +26,7 @@ public class Main extends Application {
         primaryStage.setTitle("Hello World");
 
 
+        ScrollPane spane = new ScrollPane();
         GridPane pane = new GridPane();
 
         Text[][] visualMap = new Text[25][25];
@@ -39,11 +41,15 @@ public class Main extends Application {
 //        GridPane.setConstraints(t, 0, 25);
 //        pane.getChildren().add(t);
 
+        spane.setContent(pane);
+        Scene s = new Scene(spane, height, width);
 
-        Scene s = new Scene(pane, height, width);
 
         primaryStage.setScene(s);
+        primaryStage.setFullScreenExitHint("");
+        primaryStage.setFullScreen(true);
         primaryStage.show();
+
 
     }
 

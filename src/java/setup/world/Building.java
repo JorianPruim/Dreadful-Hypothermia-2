@@ -1,6 +1,8 @@
 package setup.world;
 
-public abstract class Building {
+import setup.register.RegistryObject;
+
+public abstract class Building implements RegistryObject {
 
     public abstract void tick();
 

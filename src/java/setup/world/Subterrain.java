@@ -1,7 +1,9 @@
 package setup.world;
 
-public class Subterrain {
+import java.util.List;
 
-    public ISubType[] assets;
+public class Subterrain{
+
+    public List<ISubType> assets;
 
 }
