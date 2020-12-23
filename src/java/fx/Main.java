@@ -88,20 +88,36 @@ public class Main extends Application {
     }
 
     private void moveUp() {
-        yCoordinate -= 0.002;
-        spane.setVvalue(yCoordinate);
+        if(yCoordinate - 0.002 < 0){
+            System.out.println("you reached the edge of this world");
+        } else {
+            yCoordinate -= 0.002;
+            spane.setVvalue(yCoordinate);
+        }
     }
     private void moveLeft() {
-        xCoordinate -= 0.002;
-        spane.setHvalue(xCoordinate);
+        if(xCoordinate - 0.002 < 0){
+            System.out.println("you reached the edge of this world");
+        } else {
+            xCoordinate -= 0.002;
+            spane.setHvalue(xCoordinate);
+        }
     }
     private void moveDown() {
-        yCoordinate += 0.002;
-        spane.setVvalue(yCoordinate);
+        if(yCoordinate + 0.002 > 1){
+            System.out.println("you reached the edge of this world");
+        } else {
+            yCoordinate += 0.002;
+            spane.setVvalue(yCoordinate);
+        }
     }
     private void moveRight() {
-        xCoordinate += 0.002;
-        spane.setHvalue(xCoordinate);
+        if(xCoordinate + 0.002 > 1){
+            System.out.println("you reached the edge of this world");
+        } else {
+            xCoordinate += 0.002;
+            spane.setHvalue(xCoordinate);
+        }
     }
     private void handleKeyRelease(String character){
         //todo
