@@ -50,9 +50,8 @@ public class Main extends Application {
         spane.setContent(pane);
         Scene s = new Scene(spane, height, width);
 
-
-        s.setOnKeyPressed(e->handleKeyPress(e.getCharacter(),e.isShiftDown(),e.isControlDown(),e.isAltDown()));
-        s.setOnKeyReleased(e->handleKeyRelease(e.getCharacter()));
+        s.setOnKeyPressed(e->handleKeyPress(e.getText(),e.isShiftDown(),e.isControlDown(),e.isAltDown()));
+        s.setOnKeyReleased(e->handleKeyRelease(e.getText(),e.isShiftDown(),e.isControlDown(),e.isAltDown()));
 
         primaryStage.setScene(s);
         primaryStage.setFullScreenExitHint("");
@@ -67,6 +66,7 @@ public class Main extends Application {
         switch(character){
             case "w":
                 //moveUp();
+
                 break;
             case "a":
                 //moveLeft();
@@ -82,7 +82,7 @@ public class Main extends Application {
         }
     }
 
-    private void handleKeyRelease(String character){
+    private void handleKeyRelease(String character, boolean shift, boolean ctrl, boolean alt){
         //todo
     }
 
