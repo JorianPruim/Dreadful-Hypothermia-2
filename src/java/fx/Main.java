@@ -3,6 +3,7 @@ package fx;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -56,13 +57,15 @@ public class Main extends Application {
         Scene s = new Scene(spane, height, width);
 
 
-        s.setOnKeyPressed(e->handleKeyPress(e.getCharacter(),e.isShiftDown(),e.isControlDown(),e.isAltDown()));
-        s.setOnKeyReleased(e->handleKeyRelease(e.getCharacter()));
+        s.setOnKeyPressed(e->handleKeyPress(e.getText(),e.isShiftDown(),e.isControlDown(),e.isAltDown()));
+        s.setOnKeyReleased(e->handleKeyRelease(e.getText()));
 
         primaryStage.setScene(s);
+        primaryStage.getIcons().add(new Image("file:src/assets/missing.png"));
         primaryStage.setFullScreenExitHint("");
         primaryStage.setFullScreen(true);
         primaryStage.show();
+
 
 
 
