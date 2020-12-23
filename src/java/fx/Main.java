@@ -13,6 +13,10 @@ import setup.worldgen.WorldGenSettings;
 
 public class Main extends Application {
 
+    private ScrollPane spane = new ScrollPane();
+    private double xCoordinate;
+    private double yCoordinate;
+
     @Override
     public void start(Stage primaryStage) throws Exception{
 
@@ -23,10 +27,11 @@ public class Main extends Application {
         //testing only
         int height = 1000;
         int width = 600;
+        xCoordinate = 0.5;
+        yCoordinate = 0.5;
         primaryStage.setTitle("Hello World");
 
 
-        ScrollPane spane = new ScrollPane();
         GridPane pane = new GridPane();
 
         Text[][] visualMap = new Text[100][100];
@@ -66,7 +71,7 @@ public class Main extends Application {
     private void handleKeyPress(String character, boolean shift, boolean ctrl, boolean alt) {
         switch(character){
             case "w":
-                //moveUp();
+                moveUp();
                 break;
             case "a":
                 //moveLeft();
@@ -81,6 +86,8 @@ public class Main extends Application {
                 return;
         }
     }
+
+    private void moveup() {yCoordinate -= 0.01;}
 
     private void handleKeyRelease(String character){
         //todo
