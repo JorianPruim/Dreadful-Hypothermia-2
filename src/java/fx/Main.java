@@ -49,12 +49,39 @@ public class Main extends Application {
         Scene s = new Scene(spane, height, width);
 
 
+        s.setOnKeyPressed(e->handleKeyPress(e.getCharacter()));
+        s.setOnKeyReleased(e->handleKeyRelease(e.getCharacter()));
+
         primaryStage.setScene(s);
         primaryStage.setFullScreenExitHint("");
         primaryStage.setFullScreen(true);
         primaryStage.show();
 
 
+
+    }
+
+    private void handleKeyPress(String character) {
+        switch(character){
+            case "w":
+                //moveUp();
+                break;
+            case "a":
+                //moveLeft();
+                break;
+            case "s":
+                //moveDown();
+                break;
+            case "d":
+                //moveRight();
+                break;
+            default:
+                return;
+        }
+    }
+
+    private void handleKeyRelease(String character){
+        //todo
     }
 
     public static void main(String[] args) {
@@ -62,4 +89,6 @@ public class Main extends Application {
 
         launch(args);
     }
+
+
 }
