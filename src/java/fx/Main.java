@@ -35,6 +35,8 @@ public class Main extends Application {
                 visualMap[i][j] = new Text("" + i + j);
                 GridPane.setConstraints(visualMap[i][j], j, i);
                 pane.getChildren().add(visualMap[i][j]);
+                pane.setHgap(10);
+                pane.setVgap(10);
             }
         }
 
@@ -49,7 +51,7 @@ public class Main extends Application {
         Scene s = new Scene(spane, height, width);
 
 
-        s.setOnKeyPressed(e->handleKeyPress(e.getCharacter()));
+        s.setOnKeyPressed(e->handleKeyPress(e.getCharacter(),e.isShiftDown(),e.isControlDown(),e.isAltDown()));
         s.setOnKeyReleased(e->handleKeyRelease(e.getCharacter()));
 
         primaryStage.setScene(s);
@@ -61,7 +63,7 @@ public class Main extends Application {
 
     }
 
-    private void handleKeyPress(String character) {
+    private void handleKeyPress(String character, boolean shift, boolean ctrl, boolean alt) {
         switch(character){
             case "w":
                 //moveUp();
