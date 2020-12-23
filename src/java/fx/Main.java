@@ -3,6 +3,7 @@ package fx;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -59,9 +60,11 @@ public class Main extends Application {
         s.setOnKeyReleased(e->handleKeyRelease(e.getText()));
 
         primaryStage.setScene(s);
+        primaryStage.getIcons().add(new Image("file:src/assets/missing.png"));
         primaryStage.setFullScreenExitHint("");
         primaryStage.setFullScreen(false);
         primaryStage.show();
+
 
 
 
@@ -69,6 +72,7 @@ public class Main extends Application {
 
 
     private void handleKeyPress(String character, boolean shift, boolean ctrl, boolean alt) {
+        System.out.println(character);
         switch(character){
             case "w":
                 moveUp();
@@ -83,7 +87,7 @@ public class Main extends Application {
                 moveRight();
                 break;
             default:
-                break;
+                return;
         }
     }
 
