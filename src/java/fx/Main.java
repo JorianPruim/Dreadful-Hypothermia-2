@@ -32,7 +32,6 @@ public class Main extends Application {
         primaryStage.setTitle("Hello World");
 
 
-        ScrollPane spane = new ScrollPane();
         GridPane pane = new GridPane();
 
         Text[][] visualMap = new Text[100][100];
@@ -56,8 +55,9 @@ public class Main extends Application {
         spane.setContent(pane);
         Scene s = new Scene(spane, height, width);
 
-        s.setOnKeyPressed(e->handleKeyPress(e.getText(),e.isShiftDown(),e.isControlDown(),e.isAltDown()));
-        s.setOnKeyReleased(e->handleKeyRelease(e.getText(),e.isShiftDown(),e.isControlDown(),e.isAltDown()));
+
+        s.setOnKeyPressed(e->handleKeyPress(e.getCharacter(),e.isShiftDown(),e.isControlDown(),e.isAltDown()));
+        s.setOnKeyReleased(e->handleKeyRelease(e.getCharacter()));
 
         primaryStage.setScene(s);
         primaryStage.setFullScreenExitHint("");
@@ -69,28 +69,42 @@ public class Main extends Application {
     }
 
     private void handleKeyPress(String character, boolean shift, boolean ctrl, boolean alt) {
+        System.out.println(character);
         switch(character){
             case "w":
                 moveUp();
                 break;
             case "a":
-                //moveLeft();
+                moveLeft();
                 break;
             case "s":
-                //moveDown();
+                moveDown();
                 break;
             case "d":
-                //moveRight();
+                moveRight();
                 break;
             default:
                 return;
         }
     }
 
-    private void moveUp() {yCoordinate -= 0.01;}
-
-
-    private void handleKeyRelease(String character, boolean shift, boolean ctrl, boolean alt){
+    private void moveUp() {
+        yCoordinate -= 0.01;
+        spane.setVvalue(yCoordinate);
+    }
+    private void moveLeft() {
+        xCoordinate -= 0.01;
+        spane.setHvalue(xCoordinate);
+    }
+    private void moveDown() {
+        yCoordinate += 0.01;
+        spane.setVvalue(yCoordinate);
+    }
+    private void moveRight() {
+        xCoordinate += 0.01;
+        spane.setHvalue(xCoordinate);
+    }
+    private void handleKeyRelease(String character){
         //todo
     }
 
