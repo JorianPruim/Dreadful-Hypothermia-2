@@ -56,20 +56,20 @@ public class Main extends Application {
         spane.setContent(pane);
         Scene s = new Scene(spane, height, width);
 
-
         s.setOnKeyPressed(e->handleKeyPress(e.getText(),e.isShiftDown(),e.isControlDown(),e.isAltDown()));
         s.setOnKeyReleased(e->handleKeyRelease(e.getText()));
 
         primaryStage.setScene(s);
         primaryStage.getIcons().add(new Image("file:src/assets/missing.png"));
         primaryStage.setFullScreenExitHint("");
-        primaryStage.setFullScreen(true);
+        primaryStage.setFullScreen(false);
         primaryStage.show();
 
 
 
 
     }
+
 
     private void handleKeyPress(String character, boolean shift, boolean ctrl, boolean alt) {
         System.out.println(character);
@@ -92,19 +92,19 @@ public class Main extends Application {
     }
 
     private void moveUp() {
-        yCoordinate -= 0.01;
+        yCoordinate -= 0.002;
         spane.setVvalue(yCoordinate);
     }
     private void moveLeft() {
-        xCoordinate -= 0.01;
+        xCoordinate -= 0.002;
         spane.setHvalue(xCoordinate);
     }
     private void moveDown() {
-        yCoordinate += 0.01;
+        yCoordinate += 0.002;
         spane.setVvalue(yCoordinate);
     }
     private void moveRight() {
-        xCoordinate += 0.01;
+        xCoordinate += 0.002;
         spane.setHvalue(xCoordinate);
     }
     private void handleKeyRelease(String character){
