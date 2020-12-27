@@ -1,5 +1,8 @@
 package fx;
 
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.RowConstraints;
+import setup.world.Player;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
@@ -15,8 +18,7 @@ import setup.worldgen.WorldGenSettings;
 public class Main extends Application {
 
     private ScrollPane spane = new ScrollPane();
-    private double xCoordinate;
-    private double yCoordinate;
+
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -28,12 +30,13 @@ public class Main extends Application {
         //testing only
         int height = 1000;
         int width = 600;
-        xCoordinate = 0.5;
-        yCoordinate = 0.5;
+
         primaryStage.setTitle("Hello World");
 
 
         GridPane pane = new GridPane();
+        pane.getColumnConstraints().add(new ColumnConstraints(40));
+        pane.getRowConstraints().add(new RowConstraints(40));
 
         Text[][] visualMap = new Text[100][100];
         for(int i = 0; i<visualMap.length; i++){
@@ -41,13 +44,11 @@ public class Main extends Application {
                 visualMap[i][j] = new Text("" + i + j);
                 GridPane.setConstraints(visualMap[i][j], j, i);
                 pane.getChildren().add(visualMap[i][j]);
-                pane.setHgap(10);
-                pane.setVgap(10);
             }
         }
 
-        spane.setVvalue(0.5);
-        spane.setHvalue(0.5);
+        spane.setVvalue(Player.getYCoordinate());
+        spane.setHvalue(Player.getXCoordinate());
 
 
 //        GridPane.setConstraints(t, 0, 25);
@@ -72,57 +73,30 @@ public class Main extends Application {
 
 
     private void handleKeyPress(String character, boolean shift, boolean ctrl, boolean alt) {
-        System.out.println(character);
         switch(character){
             case "w":
-                moveUp();
+                setWindow(Player.getXCoordinate(), Player.moveUp());
                 break;
             case "a":
-                moveLeft();
+                setWindow(Player.moveLeft(), Player.getYCoordinate());
                 break;
             case "s":
-                moveDown();
+                setWindow(Player.getXCoordinate(), Player.moveDown());
                 break;
             case "d":
-                moveRight();
+                setWindow(Player.moveRight(), Player.getYCoordinate());
                 break;
             default:
                 return;
         }
     }
 
-    private void moveUp() {
-        if(yCoordinate - 0.002 < 0){
-            System.out.println("you reached the edge of this world");
-        } else {
-            yCoordinate -= 0.002;
-            spane.setVvalue(yCoordinate);
-        }
+    private void setWindow(double xCoordinate, double yCoordinate){
+        spane.setHvalue(xCoordinate);
+        spane.setVvalue(yCoordinate);
     }
-    private void moveLeft() {
-        if(xCoordinate - 0.002 < 0){
-            System.out.println("you reached the edge of this world");
-        } else {
-            xCoordinate -= 0.002;
-            spane.setHvalue(xCoordinate);
-        }
-    }
-    private void moveDown() {
-        if(yCoordinate + 0.002 > 1){
-            System.out.println("you reached the edge of this world");
-        } else {
-            yCoordinate += 0.002;
-            spane.setVvalue(yCoordinate);
-        }
-    }
-    private void moveRight() {
-        if(xCoordinate + 0.002 > 1){
-            System.out.println("you reached the edge of this world");
-        } else {
-            xCoordinate += 0.002;
-            spane.setHvalue(xCoordinate);
-        }
-    }
+
+
     private void handleKeyRelease(String character){
         //todo
     }
