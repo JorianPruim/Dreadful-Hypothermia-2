@@ -4,6 +4,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.RowConstraints;
 import setup.world.Player;
 import javafx.application.Application;
+import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -51,12 +52,14 @@ public class Main extends Application {
         spane.setHvalue(Player.getXCoordinate());
 
 
+
 //        GridPane.setConstraints(t, 0, 25);
 //        pane.getChildren().add(t);
 
         spane.setContent(pane);
         Scene s = new Scene(spane, height, width);
 
+        s.setCursor(new ImageCursor(new Image("file:src/assets/missing.png")));
         s.setOnKeyPressed(e->handleKeyPress(e.getText(),e.isShiftDown(),e.isControlDown(),e.isAltDown()));
         s.setOnKeyReleased(e->handleKeyRelease(e.getText()));
 
@@ -71,7 +74,7 @@ public class Main extends Application {
 
     }
 
-
+    //TODO: extract to controller class?
     private void handleKeyPress(String character, boolean shift, boolean ctrl, boolean alt) {
         switch(character){
             case "w":
