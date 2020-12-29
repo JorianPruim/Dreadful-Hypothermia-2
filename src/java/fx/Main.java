@@ -1,5 +1,7 @@
 package fx;
 
+import javafx.scene.Node;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.RowConstraints;
 import setup.world.Player;
@@ -33,17 +35,28 @@ public class Main extends Application {
         int height = 1000;
         int width = 600;
 
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("DH2");
 
 
         GridPane pane = new GridPane();
-        pane.getColumnConstraints().add(new ColumnConstraints(40));
-        pane.getRowConstraints().add(new RowConstraints(40));
+        pane.getColumnConstraints().add(new ColumnConstraints(16));
+        pane.getRowConstraints().add(new RowConstraints(16));
 
-        Text[][] visualMap = new Text[100][100];
+        ImageView[][] visualMap = new ImageView[250][250];
         for(int i = 0; i<visualMap.length; i++){
             for(int j = 0; j<visualMap.length; j++){
-                visualMap[i][j] = new Text("" + i + j);
+                int rand = (int) (Math.random() * 9);
+                switch (rand) {
+                    case 0 -> visualMap[i][j] = new ImageView(new Image("file:src/assets/desert.png",16,16,true,true));
+                    case 1 -> visualMap[i][j] = new ImageView(new Image("file:src/assets/forest.png",16,16,true,true));
+                    case 3 -> visualMap[i][j] = new ImageView(new Image("file:src/assets/plain.png",16,16,true,true));
+                    case 4 -> visualMap[i][j] = new ImageView(new Image("file:src/assets/snow.png",16,16,true,true));
+                    case 5 -> visualMap[i][j] = new ImageView(new Image("file:src/assets/swamp.png",16,16,true,true));
+                    case 6 -> visualMap[i][j] = new ImageView(new Image("file:src/assets/tundra.png",16,16,true,true));
+                    case 7 -> visualMap[i][j] = new ImageView(new Image("file:src/assets/taiga.png",16,16,true,true));
+                    case 8 -> visualMap[i][j] = new ImageView(new Image("file:src/assets/savanna.png",16,16,true,true));
+                    default -> visualMap[i][j] = new ImageView(new Image("file:src/assets/missing.png",16,16,true,true));
+                }
                 GridPane.setConstraints(visualMap[i][j], j, i);
                 pane.getChildren().add(visualMap[i][j]);
             }
