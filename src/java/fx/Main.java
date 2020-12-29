@@ -74,7 +74,7 @@ public class Main extends Application {
         spane.setContent(pane);
         Scene s = new Scene(spane, height, width);
 
-        s.setCursor(new ImageCursor(new Image("file:src/assets/missing.png")));
+        s.setCursor(new ImageCursor(new Image("file:src/assets/cursor.png")));
         s.setOnKeyPressed(e->handleKeyPress(e.getText(),e.isShiftDown(),e.isControlDown(),e.isAltDown()));
         s.setOnKeyReleased(e->handleKeyRelease(e.getText()));
 
