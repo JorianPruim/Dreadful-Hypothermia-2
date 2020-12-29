@@ -6,6 +6,7 @@ import setup.world.Player;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
@@ -59,6 +60,9 @@ public class Main extends Application {
 
         s.setOnKeyPressed(e->handleKeyPress(e.getText(),e.isShiftDown(),e.isControlDown(),e.isAltDown()));
         s.setOnKeyReleased(e->handleKeyRelease(e.getText()));
+
+        spane.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
+        spane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
 
         primaryStage.setScene(s);
         primaryStage.getIcons().add(new Image("file:src/assets/missing.png"));

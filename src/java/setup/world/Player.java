@@ -3,7 +3,7 @@ package setup.world;
 import fx.Main;
 
 public class Player {
-    public static double walkSpeed = 0.0004; //needs to be set to the amount of tiles / *certain number*
+    public static double walkSpeed = 0.004; //needs to be set to the amount of tiles / *certain number*
     private static double xCoordinate = 0.5; //needs to be set to the players last xCoordinate when he quits the game
     private static double yCoordinate = 0.5; //needs to be set to the players last yCoordinate when he quits the game
 
