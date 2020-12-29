@@ -49,6 +49,7 @@ public class Main extends Application {
                 switch (rand) {
                     case 0 -> visualMap[i][j] = new ImageView(new Image("file:src/assets/desert.png",16,16,true,true));
                     case 1 -> visualMap[i][j] = new ImageView(new Image("file:src/assets/forest.png",16,16,true,true));
+                    case 2 -> visualMap[i][j] = new ImageView(new Image("file:src/assets/jungle.png",16,16,true,true));
                     case 3 -> visualMap[i][j] = new ImageView(new Image("file:src/assets/plain.png",16,16,true,true));
                     case 4 -> visualMap[i][j] = new ImageView(new Image("file:src/assets/snow.png",16,16,true,true));
                     case 5 -> visualMap[i][j] = new ImageView(new Image("file:src/assets/swamp.png",16,16,true,true));
