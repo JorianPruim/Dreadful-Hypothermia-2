@@ -35,6 +35,8 @@ public class World {
         for (int i = 0; i < settings.size; i++) {
             for (int j = 0; j < settings.size; j++) {
 
+                //Place tiles according to biome type
+                tiles[i][j] = Tile.from(heat.get((int)i/8,(int)j/8),humidity.get(i/8,j/8), settings.thresholds);
                 //TODO
 
 
@@ -49,6 +51,12 @@ public class World {
         return out;
 
     }
+
+    public Tile get(int x, int y){
+        return tiles[x][y];
+    }
+
+
 
 
 
