@@ -3,9 +3,11 @@ package setup.world;
 import fx.Main;
 
 public class Player {
-    public double walkSpeed = 0.004; //needs to be set to the amount of tiles / *certain number*
-    private double xCoordinate = 0.5; //needs to be set to the players last xCoordinate when he quits the game
-    private double yCoordinate = 0.5; //needs to be set to the players last yCoordinate when he quits the game
+    private int size = 250;
+    public double walkSpeed = 1; //needs to be set to the amount of tiles / *certain number*
+    private double xCoordinate = size / 2; //needs to be set to the players last xCoordinate when he quits the game
+    private double yCoordinate = size / 2; //needs to be set to the players last yCoordinate when he quits the game
+
 
     public double getXCoordinate(){
         return xCoordinate;
@@ -14,6 +16,7 @@ public class Player {
     public double getYCoordinate(){
         return yCoordinate;
     }
+
 
     public void moveUp() {
         if(yCoordinate - walkSpeed < 0){
@@ -32,17 +35,17 @@ public class Player {
         }
     }
     public void moveDown() {
-        if(yCoordinate + walkSpeed > 1){
+        if(yCoordinate + walkSpeed > size){
             System.out.println("you reached the edge of this world");
-            yCoordinate = 0.00;
+            yCoordinate = size;
         } else {
             yCoordinate += walkSpeed;
         }
     }
     public void moveRight() {
-        if(xCoordinate + walkSpeed > 1){
+        if(xCoordinate + walkSpeed > size){
             System.out.println("you reached the edge of this world");
-            xCoordinate = 0.00;
+            xCoordinate = size;
         } else {
             xCoordinate += walkSpeed;
         }

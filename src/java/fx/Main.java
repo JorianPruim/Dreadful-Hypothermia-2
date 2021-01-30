@@ -20,10 +20,14 @@ import setup.worldgen.World;
 import setup.worldgen.WorldGenSettings;
 
 public class Main extends Application {
-
+    private final int size = 250;
     private final ScrollPane spane = new ScrollPane();
+    private final GridPane pane = new GridPane();
     private final Player dummy = new Player();
-
+    private final ImageView[][] visualMap = new ImageView[size][size];
+    private final int renderDistance = 20;
+    private final int imgsize = 32;
+    private final World renderedWorld = World.generate(WorldGenSettings.getInstance());
     @Override
     public void start(Stage primaryStage) throws Exception{
 
@@ -35,32 +39,29 @@ public class Main extends Application {
         primaryStage.setTitle("DH2");
 
 
-
-        World renderedWorld = World.generate(WorldGenSettings.getInstance());
-        
-        int imgsize = 16;
-
-        GridPane pane = new GridPane();
         pane.getColumnConstraints().add(new ColumnConstraints(imgsize));
         pane.getRowConstraints().add(new RowConstraints(imgsize));
 
-        ImageView[][] visualMap = new ImageView[250][250];
-        for(int i = 0; i<visualMap.length; i++){
-            for(int j = 0; j<visualMap.length; j++){
-                String biome = renderedWorld.get(i,j).getName();
-                try{
-                    visualMap[i][j] = new ImageView(new Image("file:src/assets/"+biome+".png",imgsize,imgsize,true,true));
-                }catch (Exception e){
-                    e.printStackTrace();
-                    visualMap[i][j] = new ImageView(new Image("file:src/assets/missing.png",imgsize,imgsize,true,true));
-                }
-                GridPane.setConstraints(visualMap[i][j], j, i);
-                pane.getChildren().add(visualMap[i][j]);
-            }
+
+
+        spane.setVvalue(0.5);
+        spane.setHvalue(0.5);
+
+        pane.setPrefSize(imgsize*size, imgsize*size);
+
+        for (int i = 0; i<size; i++){
+            visualMap[i][i] = getAsset(i, i);
+            GridPane.setConstraints(visualMap[i][i], i, i);
+            pane.getChildren().add(visualMap[i][i]);
         }
 
-        spane.setVvalue(dummy.getYCoordinate());
-        spane.setHvalue(dummy.getXCoordinate());
+        for(int i = 0; i<renderDistance+1; i++) {
+            for (int j = 0; j <renderDistance+1; j++) {
+                visualMap[size/2 - renderDistance/2 + i][size/2 - renderDistance/2 + j] = getAsset(i, j);
+                GridPane.setConstraints(visualMap[size/2 - renderDistance/2 + i][size/2 - renderDistance/2 + j], size/2 - renderDistance/2 + i, size/2 - renderDistance/2 + j);
+                pane.getChildren().add(visualMap[size/2 - renderDistance/2 + i][size/2 - renderDistance/2 + j]);
+            }
+        }
 
 
 
@@ -71,6 +72,7 @@ public class Main extends Application {
         Scene s = new Scene(spane, height, width);
 
         s.setCursor(new ImageCursor(new Image("file:src/assets/cursor.png")));
+        s.setOnMouseClicked(e->renderDown(dummy.getXCoordinate(), dummy.getYCoordinate()));
         s.setOnKeyPressed(e->handleKeyPress(e.getText(),e.isShiftDown(),e.isControlDown(),e.isAltDown()));
         s.setOnKeyReleased(e->handleKeyRelease(e.getText()));
 
@@ -102,6 +104,7 @@ public class Main extends Application {
             case "s":
                 dummy.moveDown();
                 setWindow(dummy.getXCoordinate(), dummy.getYCoordinate());
+                renderDown(dummy.getXCoordinate(), dummy.getYCoordinate());
                 break;
             case "d":
                 dummy.moveRight();
@@ -113,10 +116,32 @@ public class Main extends Application {
     }
 
     private void setWindow(double xCoordinate, double yCoordinate){
-        spane.setHvalue(xCoordinate);
-        spane.setVvalue(yCoordinate);
+        System.out.println(xCoordinate + " " + yCoordinate);
+        spane.setHvalue(xCoordinate/size);
+        spane.setVvalue(yCoordinate/size);
     }
 
+    private void renderDown(double xCoordinate, double yCoordinate){
+        System.out.println((int)xCoordinate);
+        int x = (int) xCoordinate-renderDistance/2;
+        int y = (int) yCoordinate+renderDistance/2;
+        for(int i = 0; i<renderDistance+1; i++){
+            visualMap[x+i][y] = getAsset(x+i, y);
+            GridPane.setConstraints(visualMap[x+i][y], x+i, y);
+            pane.getChildren().add(visualMap[x+i][y]);
+        }
+
+    }
+
+    private ImageView getAsset(int x, int y){
+        String biome = renderedWorld.get((int) (dummy.getXCoordinate()) - renderDistance + x, (int) (dummy.getYCoordinate()) - renderDistance + y).getName();
+        try {
+            return new ImageView(new Image("file:src/assets/" + biome + ".png", imgsize, imgsize, true, true));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ImageView(new Image("file:src/assets/missing.png", imgsize, imgsize, true, true));
+        }
+    }
 
     private void handleKeyRelease(String character){
         //todo
