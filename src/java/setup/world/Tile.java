@@ -32,7 +32,6 @@ public class Tile implements RegistryObject {
     //private int heat;//one implementation possibility
     //private int hum;
 
-
     public String getName() {
         return name;
     }

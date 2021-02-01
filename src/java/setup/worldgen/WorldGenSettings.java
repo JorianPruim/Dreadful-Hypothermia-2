@@ -5,12 +5,12 @@ Here be the magic constants
 public class WorldGenSettings {
 
     public int size = 1000;
-    public int maxHeatDropletSize = 40;
-    public int minHeatDropletSize = 25;
-    public int maxHumidityDropletSize = 50;
-    public int minHumidityDropletSize = 20;
-    public double heatDropletDensity = 1e-2;
-    public double humidityDropletDensity = 1e-2;
+    public int maxHeatDropletSize = 10;
+    public int minHeatDropletSize = 5;
+    public int maxHumidityDropletSize = 10;
+    public int minHumidityDropletSize = 5;
+    public double heatDropletDensity = 5e-2;
+    public double humidityDropletDensity = 5e-2;
     public Thresholds thresholds = Thresholds.get();
 
     private WorldGenSettings(){}
@@ -33,7 +33,6 @@ public class WorldGenSettings {
             return setSize(size);
         }
     }
-
 
     public static class Thresholds{
         public static Thresholds get(){
