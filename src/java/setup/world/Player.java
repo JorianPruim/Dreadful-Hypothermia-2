@@ -1,11 +1,14 @@
 package setup.world;
 
 import fx.Main;
+import util.Direction;
 
 public class Player {
-    public double walkSpeed = 0.004; //needs to be set to the amount of tiles / *certain number*
-    private double xCoordinate = 0.5; //needs to be set to the players last xCoordinate when he quits the game
-    private double yCoordinate = 0.5; //needs to be set to the players last yCoordinate when he quits the game
+
+    private double walkSpeed;
+    private double xCoordinate = 0.5;
+    private double yCoordinate = 0.5;
+    //public Inventory inv;
 
     public double getXCoordinate(){
         return xCoordinate;
@@ -15,38 +18,28 @@ public class Player {
         return yCoordinate;
     }
 
-    public void moveUp() {
-        if(yCoordinate - walkSpeed < 0){
-            System.out.println("you reached the edge of this world");
-            yCoordinate = 0.00;
-        } else {
-            yCoordinate -= walkSpeed;
+    public void move(double delX, double delY){
+        if (!(xCoordinate + delX > 1) && !(xCoordinate + delX < 0) && !(yCoordinate + delY > 1) && !(yCoordinate + delY < 0)) {
+            xCoordinate+=delX;
+            yCoordinate+=delY;
         }
     }
-    public void moveLeft() {
-        if(xCoordinate - walkSpeed < 0){
-            System.out.println("you reached the edge of this world");
-            xCoordinate = 0.00;
-        } else {
-            xCoordinate -= walkSpeed;
-        }
+
+    public void moveIn(byte direction){
+        move(walkSpeed * (direction & 0b0001), walkSpeed * (direction & 0b0010)/2);
+        move(-walkSpeed * (direction & 0b0100)/4, -walkSpeed * (direction & 0b1000)/8);
     }
-    public void moveDown() {
-        if(yCoordinate + walkSpeed > 1){
-            System.out.println("you reached the edge of this world");
-            yCoordinate = 0.00;
-        } else {
-            yCoordinate += walkSpeed;
-        }
+
+    public void updateWalkSpeed(double factor){
+        walkSpeed*=factor;
     }
-    public void moveRight() {
-        if(xCoordinate + walkSpeed > 1){
-            System.out.println("you reached the edge of this world");
-            xCoordinate = 0.00;
-        } else {
-            xCoordinate += walkSpeed;
-        }
-    }
+
+
+
+
+
+
+
     //huge todo
 
     //+ addToInv

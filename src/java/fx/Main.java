@@ -1,9 +1,9 @@
 package fx;
 
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.*;
 import setup.world.Player;
 import javafx.application.Application;
 import javafx.scene.ImageCursor;
@@ -11,7 +11,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.image.Image;
-import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -58,6 +57,7 @@ public class Main extends Application {
                 pane.getChildren().add(visualMap[i][j]);
             }
         }
+        
 
         spane.setVvalue(dummy.getYCoordinate());
         spane.setHvalue(dummy.getXCoordinate());
@@ -70,7 +70,7 @@ public class Main extends Application {
         spane.setContent(pane);
         Scene s = new Scene(spane, height, width);
 
-        s.setCursor(new ImageCursor(new Image("file:src/assets/cursor.png")));
+        s.setCursor(new ImageCursor(new Image("file:src/assets/missing.png")));
         s.setOnKeyPressed(e->handleKeyPress(e.getText(),e.isShiftDown(),e.isControlDown(),e.isAltDown()));
         s.setOnKeyReleased(e->handleKeyRelease(e.getText()));
 
@@ -92,19 +92,19 @@ public class Main extends Application {
     private void handleKeyPress(String character, boolean shift, boolean ctrl, boolean alt) {
         switch(character){
             case "w":
-                dummy.moveUp();
+                dummy.moveIn((byte) 2);
                 setWindow(dummy.getXCoordinate(), dummy.getYCoordinate());
                 break;
             case "a":
-                dummy.moveLeft();
+                dummy.moveIn((byte) 4);
                 setWindow(dummy.getXCoordinate(), dummy.getYCoordinate());
                 break;
             case "s":
-                dummy.moveDown();
+                dummy.moveIn((byte) 1);
                 setWindow(dummy.getXCoordinate(), dummy.getYCoordinate());
                 break;
             case "d":
-                dummy.moveRight();
+                dummy.moveIn((byte) 8);
                 setWindow(dummy.getXCoordinate(), dummy.getYCoordinate());
                 break;
             default:
