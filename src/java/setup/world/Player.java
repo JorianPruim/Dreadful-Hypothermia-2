@@ -5,9 +5,10 @@ import util.Direction;
 
 public class Player {
 
-    private double walkSpeed;
-    private double xCoordinate = 0.5;
-    private double yCoordinate = 0.5;
+    private int size = 250;
+    private double walkSpeed = 1;
+    private double xCoordinate = size/2;
+    private double yCoordinate = size/2;
     //public Inventory inv;
 
     public double getXCoordinate(){
@@ -19,7 +20,7 @@ public class Player {
     }
 
     public void move(double delX, double delY){
-        if (!(xCoordinate + delX > 1) && !(xCoordinate + delX < 0) && !(yCoordinate + delY > 1) && !(yCoordinate + delY < 0)) {
+        if (!(xCoordinate + delX > size) && !(xCoordinate + delX < 0) && !(yCoordinate + delY > size) && !(yCoordinate + delY < 0)) {
             xCoordinate+=delX;
             yCoordinate+=delY;
         }
@@ -33,6 +34,7 @@ public class Player {
     public void updateWalkSpeed(double factor){
         walkSpeed*=factor;
     }
+
 
 
 
