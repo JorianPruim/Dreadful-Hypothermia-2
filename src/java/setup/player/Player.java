@@ -1,15 +1,12 @@
-package setup.world;
-
-import fx.Main;
-import util.Direction;
+package setup.player;
 
 public class Player {
 
-    private int size = 250;
-    private double walkSpeed = 1;
-    private double xCoordinate = size/2;
-    private double yCoordinate = size/2;
-    //public Inventory inv;
+    private int size = 250;//TODO Replace with World and all references by World.getSize or related
+    private double walkSpeed = 3;
+    private double xCoordinate = (double)size/2;
+    private double yCoordinate = (double)size/2;
+    private Inventory inv;
 
     public double getXCoordinate(){
         return xCoordinate;
@@ -35,7 +32,9 @@ public class Player {
         walkSpeed*=factor;
     }
 
-
+    public Inventory getInventory(){
+        return inv;
+    }
 
 
 
@@ -44,9 +43,8 @@ public class Player {
 
     //huge todo
 
-    //+ addToInv
+
     //+ getSelectedItem
-    //+ getInv
     //+ getHealth
     //+
 }

@@ -1,4 +1,7 @@
 package setup.worldgen;
+
+import java.util.Random;
+
 /*
 Here be the magic constants
  */
@@ -12,6 +15,7 @@ public class WorldGenSettings {
     public double heatDropletDensity = 5e-2;
     public double humidityDropletDensity = 5e-2;
     public Thresholds thresholds = Thresholds.get();
+    public int seed = (new Random()).nextInt();
 
     private WorldGenSettings(){}
     public static WorldGenSettings getInstance(){

@@ -1,7 +1,7 @@
 package setup.world;
 
+import setup.player.Player;
 import setup.register.Registers;
-import setup.register.Registry;
 import setup.register.RegistryObject;
 import setup.worldgen.WorldGenSettings;
 

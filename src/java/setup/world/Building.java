@@ -1,5 +1,6 @@
 package setup.world;
 
+import setup.player.Player;
 import setup.register.RegistryObject;
 
 public abstract class Building implements RegistryObject {

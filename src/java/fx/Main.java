@@ -1,20 +1,14 @@
 package fx;
 
-import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import setup.world.Player;
+import setup.player.Player;
 import javafx.application.Application;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.image.Image;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import setup.worldgen.Map;
 import setup.worldgen.World;
 import setup.worldgen.WorldGenSettings;
 
@@ -22,7 +16,7 @@ public class Main extends Application {
     private final int size = 250;
     private final ScrollPane spane = new ScrollPane();
     private final GridPane pane = new GridPane();
-    private final Player dummy = new Player();
+    private final Player dummy = new Player(); //TODO: retrieve player from save file.
     private final int renderDistance = 10;
     private final ImageView[][] visualMap = new ImageView[renderDistance*2][renderDistance*2];
     private final int imgsize = 32;
@@ -183,3 +177,6 @@ public class Main extends Application {
 
 
 }
+/*
+This place is reserved for outdated memes.
+ */

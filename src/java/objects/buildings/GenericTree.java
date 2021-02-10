@@ -1,6 +1,6 @@
 package objects.buildings;
 
-import setup.world.Player;
+import setup.player.Player;
 
 public class GenericTree extends GeneratableBuilding {
     @Override

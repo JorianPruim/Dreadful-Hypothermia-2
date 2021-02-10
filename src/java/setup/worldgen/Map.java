@@ -14,6 +14,8 @@ import java.util.Random;
 public class Map{
 
     int[][] data;
+    Random random;
+
 
     /**
      * Default constructor returning a {@code Map} with the given architecture.
@@ -23,7 +25,8 @@ public class Map{
      * @param maxDropSize the maximum droplet size
      * @param dropletDensity chance of spawning a droplet at any given point
      */
-    public Map(int size, int minDropSize, int maxDropSize, double dropletDensity){
+    public Map(int size, int minDropSize, int maxDropSize, double dropletDensity, int seed){
+        this.random = new Random(seed);
         if(minDropSize>=maxDropSize){
             throw new IllegalArgumentException("maxDropSize must be bigger than minDropSize");
         }

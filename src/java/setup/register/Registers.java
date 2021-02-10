@@ -1,11 +1,8 @@
 package setup.register;
 
-import objects.buildings.GenericTree;
 import setup.crafting.Knowledge;
 import setup.world.Generatable;
-import setup.world.Player;
 import setup.world.Tile;
-import setup.worldgen.Biome;
 
 public class Registers {
     public static Registry<Tile> BIO = new Registry<Tile>();

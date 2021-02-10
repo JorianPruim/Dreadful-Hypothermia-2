@@ -29,8 +29,8 @@ public class World {
     }
 
     public static World generate(WorldGenSettings settings){
-        Map heat = new Map(settings.size/8,settings.minHeatDropletSize,settings.maxHeatDropletSize,settings.heatDropletDensity);
-        Map humidity = new Map(settings.size/8,settings.minHumidityDropletSize,settings.maxHumidityDropletSize,settings.humidityDropletDensity);
+        Map heat = new Map(settings.size/8,settings.minHeatDropletSize,settings.maxHeatDropletSize,settings.heatDropletDensity,settings.seed);
+        Map humidity = new Map(settings.size/8,settings.minHumidityDropletSize,settings.maxHumidityDropletSize,settings.humidityDropletDensity,settings.seed);
         Tile[][] tiles = new Tile[settings.size][settings.size];
         for (int i = 0; i < settings.size; i++) {
             for (int j = 0; j < settings.size; j++) {
