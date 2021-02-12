@@ -11,6 +11,8 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import setup.worldgen.World;
 import setup.worldgen.WorldGenSettings;
+import util.TemporaryHack;
+
 
 public class Main extends Application {
     private final int size = 250;
@@ -145,7 +147,7 @@ public class Main extends Application {
         System.out.println("("+x+","+y+")");
     }
 
-
+    @TemporaryHack("This method does not use direct source images from the tile registry and is still incapable of adding assets from the tiles occupier.")
     private ImageView getAsset(int x, int y){
         String biome = renderedWorld.get((int) (dummy.getXCoordinate()) + x, (int) (dummy.getYCoordinate()) + y).getName();
 

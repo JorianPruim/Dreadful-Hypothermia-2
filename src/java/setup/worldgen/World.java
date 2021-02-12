@@ -1,5 +1,6 @@
 package setup.worldgen;
 
+import setup.player.Player;
 import setup.world.Tile;
 
 import java.io.*;
@@ -13,10 +14,11 @@ import static java.nio.file.StandardOpenOption.CREATE;
 
 public class World {
 
-    final int size;
-    final Tile[][] tiles;
-    Map heat;
-    Map hum;
+    private final int size;
+    private final Tile[][] tiles;
+    private Map heat;
+    private Map hum;
+    private final Player player;
 
 
     private World(Tile[][] tiles){
@@ -26,6 +28,8 @@ public class World {
                 //System.out.println(tile);
             }
         }
+        this.player = new Player();
+        player.bind(this);
     }
 
     public static World generate(WorldGenSettings settings){
@@ -107,7 +111,9 @@ public class World {
 
     }
 
-
+    public int getSize() {
+        return size;
+    }
 
     @Override
     public String toString() {

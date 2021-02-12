@@ -1,12 +1,27 @@
 package setup.player;
 
-public class Player {
+import setup.worldgen.World;
 
-    private int size = 250;//TODO Replace with World and all references by World.getSize or related
+public class Player{
+
+    //private int size() = 250;
+    private World world;
     private double walkSpeed = 3;
-    private double xCoordinate = (double)size/2;
-    private double yCoordinate = (double)size/2;
+    private double xCoordinate;
+    private double yCoordinate;
     private Inventory inv;
+
+    
+
+    public void bind(World world){
+        this.world = world;
+        this.xCoordinate = this.yCoordinate = ((double)world.getSize())/2;
+    }
+    public void bind(World world, double x, double y){
+        this.world = world;
+        this.xCoordinate = x;
+        this.yCoordinate = y;
+    }
 
     public double getXCoordinate(){
         return xCoordinate;
@@ -17,7 +32,7 @@ public class Player {
     }
 
     public void move(double delX, double delY){
-        if (!(xCoordinate + delX > size) && !(xCoordinate + delX < 0) && !(yCoordinate + delY > size) && !(yCoordinate + delY < 0)) {
+        if (!(xCoordinate + delX > world.getSize()) && !(xCoordinate + delX < 0) && !(yCoordinate + delY > world.getSize()) && !(yCoordinate + delY < 0)) {
             xCoordinate+=delX;
             yCoordinate+=delY;
         }
