@@ -1,11 +1,12 @@
 package setup.world;
 
+import objects.GameObject;
 import setup.player.Player;
 import setup.register.Registers;
 import setup.register.RegistryObject;
 import setup.worldgen.WorldGenSettings;
 
-public class Tile implements RegistryObject {
+public class Tile extends GameObject {
 
     public static Tile from(int heat, int hum, WorldGenSettings.Thresholds thresholds){
         if(heat < thresholds.minMediocreHeatThreshold){
@@ -19,7 +20,7 @@ public class Tile implements RegistryObject {
 
 
     public Tile(String name){
-        this.name = name;
+        super(name);
     }
 
     private void setName(String name){

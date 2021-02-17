@@ -1,7 +1,7 @@
 package setup.crafting;
 
 import setup.world.Building;
-import setup.world.Item;
+import objects.items.Item;
 
 import java.util.List;
 

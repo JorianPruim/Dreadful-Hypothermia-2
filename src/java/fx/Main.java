@@ -1,5 +1,7 @@
 package fx;
 
+import javafx.scene.Group;
+import javafx.scene.effect.BlendMode;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import setup.player.Player;
@@ -117,22 +119,7 @@ public class Main extends Application {
         spane.setVvalue(yCoordinate/size);
     }
 
-    private void renderDown(double xCoordinate, double yCoordinate){
-        int x = (int) xCoordinate;
-        int y = (int) yCoordinate;
-        for(int i = -renderDistance; i<=renderDistance; i++){
-            if(i == -10 || i == 10){
-                System.out.println(x+i);
-            }
-            visualMap[x+i][y] = getAsset(x+i, y);
-            GridPane.setConstraints(visualMap[x+i][y], x+i, y);
-            pane.getChildren().add(visualMap[x+i][y]);
-        //    pane.getChildren().remove(visualMap[x-renderDistance+i][y]);
-
-        }
-
-    }
-
+    @TemporaryHack("Has to be updated so it renders an image group based of a raw pane input")
     private void render(double xd, double yd){
         int x = (int)xd;
         int y = (int)yd;

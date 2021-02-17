@@ -1,10 +1,9 @@
 package setup.player;
 
-import setup.world.Item;
+import objects.items.Item;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
 
 public class Inventory {
 
@@ -18,7 +17,7 @@ public class Inventory {
         this.contents = new ArrayList<>();
     }
 
-    public synchronized boolean addToInv(Item item){
+    public boolean addToInv(Item item){
 /*      final double[] weight = {0};
         final double[] size = {0};
         contents.forEach(i->{
@@ -34,7 +33,7 @@ public class Inventory {
         }
     }
 
-    public synchronized List<Item> addToInv(List<Item> items){
+    public List<Item> addToInv(List<Item> items){
         List<Item> residue = items.subList(0,0);
         for(Item item : items){
             if(!addToInv(item)){

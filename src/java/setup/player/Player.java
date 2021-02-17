@@ -4,7 +4,7 @@ import setup.worldgen.World;
 
 public class Player{
 
-    //private int size() = 250;
+    //private int size = 250;
     private World world;
     private double walkSpeed = 3;
     private double xCoordinate;

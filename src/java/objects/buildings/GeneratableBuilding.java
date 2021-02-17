@@ -7,6 +7,10 @@ import setup.world.Tile;
 public abstract class GeneratableBuilding extends Building implements Generatable {
 
 
+    public GeneratableBuilding(String name) {
+        super(name);
+    }
+
     @Override
     public boolean doesGenerate(Tile host) {
         return false;

@@ -8,13 +8,18 @@ public class Knowledge implements RegistryObject {
     public Knowledge parent;
     public String description;
     public int id;
+    public String name;
 
     public Knowledge(){
-        this(ROOT);
+        this(ROOT,"root");
     }
-    public Knowledge(Knowledge parent){
+    public Knowledge(Knowledge parent, String name){
         this.parent = parent;
+        this.name = name;
     }
 
-
+    @Override
+    public String getName() {
+        return name;
+    }
 }
