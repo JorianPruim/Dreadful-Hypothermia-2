@@ -19,23 +19,17 @@ public class Tile extends GameObject {
     }
 
 
-    public Tile(String name){
-        super(name);
+    public Tile(){
+        super();
     }
 
-    private void setName(String name){
-        this.name = name;
-    }
-    private String name;
     private boolean isVisible;
     private Building building;
     private Subterrain sub;
     //private int heat;//one implementation possibility
     //private int hum;
 
-    public String getName() {
-        return name;
-    }
+
 
     public void onPrimaryInteract(Player p){
         if(this.building!=null){

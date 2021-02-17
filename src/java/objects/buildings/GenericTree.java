@@ -3,8 +3,8 @@ package objects.buildings;
 import setup.player.Player;
 
 public class GenericTree extends GeneratableBuilding {
-    public GenericTree(String name) {
-        super(name);
+    public GenericTree() {
+        super();
     }
 
     @Override

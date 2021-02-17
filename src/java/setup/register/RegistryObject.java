@@ -1,7 +1,16 @@
 package setup.register;
 
-public interface RegistryObject {
+public class RegistryObject {
 
-    public String getName();
+    private String name;
+    public void onRegister(String n){
+        this.name = n;
+    }
+    public String getName(){
+        return name;
+    }
+
+    //plz no instance...
+    protected RegistryObject(){}
 
 }

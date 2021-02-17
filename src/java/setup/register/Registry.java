@@ -1,6 +1,8 @@
 package setup.register;
 
 
+import objects.GameObject;
+
 import java.util.ArrayList;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -14,6 +16,7 @@ public class Registry<T extends RegistryObject> extends ArrayList<RegistryEntry<
     }
 
     public RegistryEntry<T> register(Supplier<T> provider, String name){
+        System.out.println("Registered "+name+" under id " + current);
         RegistryEntry<T> entry = new RegistryEntry<>(provider,getNext(),name);
         this.add(entry);
         return entry;

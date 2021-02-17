@@ -2,7 +2,7 @@ package setup.crafting;
 
 import setup.register.RegistryObject;
 
-public class Knowledge implements RegistryObject {
+public class Knowledge extends RegistryObject {
 
     public static Knowledge ROOT = new Knowledge(); //Base of all science
     public Knowledge parent;

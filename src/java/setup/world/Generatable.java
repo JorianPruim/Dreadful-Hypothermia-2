@@ -3,7 +3,7 @@ package setup.world;
 import setup.register.RegistryObject;
 
 
-public interface Generatable extends RegistryObject {
+public interface Generatable {
 
     boolean doesGenerate(Tile host);
 

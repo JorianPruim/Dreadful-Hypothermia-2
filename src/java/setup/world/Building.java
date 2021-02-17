@@ -6,8 +6,8 @@ import setup.register.RegistryObject;
 
 public abstract class Building extends GameObject {
 
-    public Building(String name) {
-        super(name);
+    public Building() {
+        super();
     }
 
     public abstract void tick();

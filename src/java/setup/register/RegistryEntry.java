@@ -2,7 +2,7 @@ package setup.register;
 
 import java.util.function.Supplier;
 
-public class RegistryEntry<T> {
+public class RegistryEntry<T extends RegistryObject> {
 
 
     private final Supplier<T> entrySupplier;
@@ -16,7 +16,9 @@ public class RegistryEntry<T> {
     }
 
     public T get(){
-        return entrySupplier.get();
+        T out = entrySupplier.get();
+        out.onRegister(name);
+        return out;
     }
     public int getId(){
         return id;

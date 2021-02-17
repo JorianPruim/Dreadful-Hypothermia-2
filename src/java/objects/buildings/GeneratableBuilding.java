@@ -7,8 +7,8 @@ import setup.world.Tile;
 public abstract class GeneratableBuilding extends Building implements Generatable {
 
 
-    public GeneratableBuilding(String name) {
-        super(name);
+    public GeneratableBuilding() {
+        super();
     }
 
     @Override

@@ -2,14 +2,13 @@ package objects;
 
 import setup.register.RegistryObject;
 
-public class GameObject implements RegistryObject {
+public class GameObject extends RegistryObject {
     private String name;
-    public GameObject(String name){
-        this.name = name;
+    public GameObject(){
+
     }
 
-    @Override
-    public String getName() {
-        return name;
-    }
+
+
+
 }

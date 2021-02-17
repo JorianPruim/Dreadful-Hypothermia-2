@@ -10,7 +10,7 @@ public class Item extends GameObject {
     private String name;
 
     public Item(double size, double weight, String name){
-        super(name);
+        super();
         this.size = size;
         this.weight = weight;
     }
