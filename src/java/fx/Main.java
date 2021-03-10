@@ -1,6 +1,7 @@
 package fx;
 
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -11,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import setup.world.Tile;
 import setup.worldgen.World;
 import setup.worldgen.WorldGenSettings;
 import util.TemporaryHack;
@@ -20,14 +22,14 @@ public class Main extends Application {
     private final int size = 250;
     private final ScrollPane spane = new ScrollPane();
     private final GridPane pane = new GridPane();
-    private final Player dummy = new Player(); //TODO: retrieve player from save file.
+    private Player dummy = new Player(); //TODO: retrieve player from save file.
     private final int renderDistance = 10;
     private final ImageView[][] visualMap = new ImageView[renderDistance*2][renderDistance*2];
     private final int imgsize = 32;
     private final World renderedWorld = World.generate(WorldGenSettings.getInstance());
     @Override
     public void start(Stage primaryStage) throws Exception{
-
+        dummy = renderedWorld.player;
 
         //testing only
         int height = 1000;
@@ -53,7 +55,9 @@ public class Main extends Application {
             System.out.println(i);
         }*/
 
-        render(dummy.getXCoordinate(), dummy.getYCoordinate());
+
+
+        render((int)dummy.getXCoordinate(), (int)dummy.getYCoordinate());
 
 
         spane.setVvalue(dummy.getYCoordinate()/size);
@@ -67,8 +71,8 @@ public class Main extends Application {
         spane.setContent(pane);
         Scene s = new Scene(spane, height, width);
 
-        s.setCursor(new ImageCursor(new Image("file:src/assets/missing.png")));
-        s.setOnMouseClicked(e->render(dummy.getXCoordinate(), dummy.getYCoordinate()));
+        s.setCursor(new ImageCursor(new Image("file:src/assets/tiles/missing.png")));
+        s.setOnMouseClicked(e-> render((int)dummy.getXCoordinate(), (int)dummy.getYCoordinate()));
         s.setOnKeyPressed(e->handleKeyPress(e.getText(),e.isShiftDown(),e.isControlDown(),e.isAltDown()));
         s.setOnKeyReleased(e->handleKeyRelease(e.getText()));
 
@@ -76,7 +80,7 @@ public class Main extends Application {
         spane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
 
         primaryStage.setScene(s);
-        primaryStage.getIcons().add(new Image("file:src/assets/missing.png"));
+        primaryStage.getIcons().add(new Image("file:src/assets/tiles/missing.png"));
         primaryStage.setFullScreenExitHint("");
         primaryStage.setFullScreen(false);
         primaryStage.show();
@@ -92,26 +96,28 @@ public class Main extends Application {
             case "w":
                 dummy.moveIn((byte) 8);
                 setWindow(dummy.getXCoordinate(), dummy.getYCoordinate());
-                render(dummy.getXCoordinate(), dummy.getYCoordinate());
+                //TODO: cleanup
+                render((int)dummy.getXCoordinate(),(int)dummy.getYCoordinate());
                 break;
             case "a":
                 dummy.moveIn((byte) 4);
                 setWindow(dummy.getXCoordinate(), dummy.getYCoordinate());
-                render(dummy.getXCoordinate(), dummy.getYCoordinate());
+                render((int)dummy.getXCoordinate(),(int)dummy.getYCoordinate());
                 break;
             case "s":
                 dummy.moveIn((byte) 2);
                 setWindow(dummy.getXCoordinate(), dummy.getYCoordinate());
-                render(dummy.getXCoordinate(), dummy.getYCoordinate());
+                render((int)dummy.getXCoordinate(),(int)dummy.getYCoordinate());
                 break;
             case "d":
                 dummy.moveIn((byte) 1);
                 setWindow(dummy.getXCoordinate(), dummy.getYCoordinate());
-                render(dummy.getXCoordinate(), dummy.getYCoordinate());
+                render((int)dummy.getXCoordinate(),(int)dummy.getYCoordinate());
                 break;
             default:
                 return;
         }
+
     }
 
     private void setWindow(double xCoordinate, double yCoordinate){
@@ -119,8 +125,9 @@ public class Main extends Application {
         spane.setVvalue(yCoordinate/size);
     }
 
+    @Deprecated
     @TemporaryHack("Has to be updated so it renders an image group based of a raw pane input")
-    private void render(double xd, double yd){
+    private void renderOld(double xd, double yd){
         int x = (int)xd;
         int y = (int)yd;
         pane.getChildren().clear();
@@ -134,19 +141,52 @@ public class Main extends Application {
         System.out.println("("+x+","+y+")");
     }
 
+    //TODO: still broken :(
+    private void render(int x, int y){
+        pane.getChildren().clear();
+        Group[][] plane = new Group[renderDistance*2][renderDistance*2];
+        for(int i = -renderDistance; i<renderDistance; i++){
+            for(int j = -renderDistance; j<renderDistance; j++){
+                plane[renderDistance+i][renderDistance+j] = tileRender(renderedWorld.get(x+i,y+j));
+                GridPane.setConstraints(plane[renderDistance+i][renderDistance+j],x+i,y+j);
+                pane.getChildren().add(plane[renderDistance+i][renderDistance+j]);
+            }
+        }
+    }
+
+    private Group tileRender(Tile tile){
+        Group render = new Group();
+        Image img = new Image("file:src/assets/tiles/" + tile.getName() + ".png",imgsize,imgsize,true,true);
+        if(img.isError()){
+            img = new Image("file:src/assets/tiles/missing.png",imgsize,imgsize,true,true);
+        }
+        render.getChildren().add(new ImageView(img));
+        if(tile.getBuilding()!=null){
+            Image bld = new Image("file:src/assets/buildings/"+tile.getBuilding().getName()+".png",imgsize,imgsize,true,true);
+            if(img.isError()){
+                bld = new Image("file:src/assets/buildings/missing.png",imgsize,imgsize,true,true);
+            }
+            render.getChildren().add(new ImageView(bld));
+        }
+        render.setBlendMode(BlendMode.SRC_ATOP);
+        return render;
+
+    }
+
+    @Deprecated
     @TemporaryHack("This method does not use direct source images from the tile registry and is still incapable of adding assets from the tiles occupier.")
     private ImageView getAsset(int x, int y){
-        String biome = renderedWorld.get((int) (dummy.getXCoordinate()) + x, (int) (dummy.getYCoordinate()) + y).getName();
+        String biome = renderedWorld.get(x, y).getName();
 
         try {
-            Image img = new Image("file:src/assets/" + biome + ".png", imgsize, imgsize, true, true);
+            Image img = new Image("file:src/assets/tiles/" + biome + ".png", imgsize, imgsize, true, true);
             if(img.isError()){
                 throw new Exception();
             }
             return new ImageView(img);
         } catch (Exception e) {
             //e.printStackTrace();
-            return new ImageView(new Image("file:src/assets/missing.png", imgsize, imgsize, true, true));
+            return new ImageView(new Image("file:src/assets/tiles/missing.png", imgsize, imgsize, true, true));
         }
     }
 

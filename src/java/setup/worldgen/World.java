@@ -18,7 +18,7 @@ public class World {
     private final Tile[][] tiles;
     private Map heat;
     private Map hum;
-    private final Player player;
+    public final Player player;
 
 
     private World(Tile[][] tiles){
