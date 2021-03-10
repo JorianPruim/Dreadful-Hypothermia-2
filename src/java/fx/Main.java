@@ -145,6 +145,16 @@ public class Main extends Application {
     private void render(int x, int y){
         pane.getChildren().clear();
         Group[][] plane = new Group[renderDistance*2][renderDistance*2];
+        if(x-renderDistance<0){
+            x+=renderDistance-x;
+        }else if(x+renderDistance>size) {
+            x -= renderDistance - (size - x);
+        }
+        if(y-renderDistance<0){
+            y+=renderDistance-y;
+        }else if(y+renderDistance>size){
+            y-=renderDistance-(size-y);
+        }
         for(int i = -renderDistance; i<renderDistance; i++){
             for(int j = -renderDistance; j<renderDistance; j++){
                 plane[renderDistance+i][renderDistance+j] = tileRender(renderedWorld.get(x+i,y+j));
