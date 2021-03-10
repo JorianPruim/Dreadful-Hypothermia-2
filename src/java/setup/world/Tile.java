@@ -50,5 +50,7 @@ public class Tile extends GameObject {
         this.building = null;
     }
 
-
+    public Building getBuilding() {
+        return building;
+    }
 }

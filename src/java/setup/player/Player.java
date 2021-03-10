@@ -6,7 +6,7 @@ public class Player{
 
     //private int size = 250;
     private World world;
-    private double walkSpeed = 3;
+    private double walkSpeed = 0.5;
     private double xCoordinate;
     private double yCoordinate;
     private Inventory inv;
