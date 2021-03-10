@@ -2,9 +2,11 @@ package fx;
 
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.DialogPane;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 import setup.player.Player;
 import javafx.application.Application;
 import javafx.scene.ImageCursor;
@@ -20,8 +22,10 @@ import util.TemporaryHack;
 
 public class Main extends Application {
     private final int size = 250;
+    private final GridPane root = new GridPane();
     private final ScrollPane spane = new ScrollPane();
     private final GridPane pane = new GridPane();
+    private final GridPane interactionPane = new GridPane();
     private Player dummy = new Player(); //TODO: retrieve player from save file.
     private final int renderDistance = 10;
     private final ImageView[][] visualMap = new ImageView[renderDistance*2][renderDistance*2];
@@ -63,13 +67,40 @@ public class Main extends Application {
         spane.setVvalue(dummy.getYCoordinate()/size);
         spane.setHvalue(dummy.getXCoordinate()/size);
 
+        Text text1 = new Text("dit wordt de inventory");
+        Text text2 = new Text("dit s de building interacton nogwattes");
+        Text text3 = new Text("gezondheid en welzijn");
 
+        RowConstraints row1 = new RowConstraints();
+        row1.setPercentHeight(10);
+        RowConstraints row2 = new RowConstraints();
+        row2.setPercentHeight(15);
+        RowConstraints row3 = new RowConstraints();
+        row3.setPercentHeight(20);
+        interactionPane.getRowConstraints().addAll(row1, row2, row3);
+
+
+        GridPane.setConstraints(text1, 1, 1);
+        GridPane.setConstraints(text2, 1, 2);
+        GridPane.setConstraints(text3, 1, 3);
+        interactionPane.getChildren().addAll(text1, text2, text3);
 
 //        GridPane.setConstraints(t, 0, 25);
 //        pane.getChildren().add(t);
 
+        ColumnConstraints column1 = new ColumnConstraints();
+        RowConstraints row10 = new RowConstraints();
+        column1.setPercentWidth(80);
+        row10.setPercentHeight(100);
+        ColumnConstraints column2 = new ColumnConstraints();
+        column2.setPercentWidth(20);
+        root.getRowConstraints().addAll(row10);
+        root.getColumnConstraints().addAll(column1, column2);
         spane.setContent(pane);
-        Scene s = new Scene(spane, height, width);
+        GridPane.setConstraints(spane, 0, 0);
+        GridPane.setConstraints(interactionPane, 1, 0);
+        root.getChildren().addAll(spane, interactionPane);
+        Scene s = new Scene(root, height, width);
 
         s.setCursor(new ImageCursor(new Image("file:src/assets/tiles/missing.png")));
         s.setOnMouseClicked(e-> render((int)dummy.getXCoordinate(), (int)dummy.getYCoordinate()));
