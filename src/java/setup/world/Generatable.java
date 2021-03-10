@@ -5,6 +5,6 @@ import setup.register.RegistryObject;
 
 public interface Generatable {
 
-    boolean doesGenerate(Tile host);
+    boolean doesGenerate(Tile host,int seed);
 
 }

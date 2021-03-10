@@ -11,10 +11,6 @@ public abstract class GeneratableBuilding extends Building implements Generatabl
         super();
     }
 
-    @Override
-    public boolean doesGenerate(Tile host) {
-        return false;
-    }
 
 
 }

@@ -32,7 +32,7 @@ public class Player{
     }
 
     public void move(double delX, double delY){
-        if (!(xCoordinate + delX > world.getSize()) && !(xCoordinate + delX < 0) && !(yCoordinate + delY > world.getSize()) && !(yCoordinate + delY < 0)) {
+        if (!(xCoordinate + delX > world.getSize()) && !(xCoordinate + delX < 0) && !(yCoordinate + delY > world.getSize()) && !(yCoordinate + delY < 0) && (world.get((int)Math.floor(xCoordinate+delX),(int)Math.floor(yCoordinate+delY)).getBuilding()==null) || !world.get((int)Math.floor(xCoordinate+delX),(int)Math.floor(yCoordinate+delY)).getBuilding().doCollide()) {
             xCoordinate+=delX;
             yCoordinate+=delY;
         }

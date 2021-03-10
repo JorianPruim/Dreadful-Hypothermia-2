@@ -15,4 +15,6 @@ public abstract class Building extends GameObject {
     public abstract void onPrimaryInteract(Player p);
 
     public abstract void onSecondaryInteract(Player p);
+
+    public abstract boolean doCollide();
 }

@@ -1,14 +1,16 @@
 package setup.register;
 
+import objects.buildings.GenericTree;
 import setup.crafting.Knowledge;
 import setup.player.Player;
+import setup.world.Building;
 import setup.world.Generatable;
 import setup.world.Tile;
 
 public class Registers {
     public static Registry<Tile> BIO = new Registry<Tile>();
     public static Registry<Knowledge> KWL = new Registry<Knowledge>();
-
+    public static Registry<Building> BLD = new Registry<Building>();
 
 
     //entries go here.
@@ -25,6 +27,7 @@ public class Registers {
     public static final RegistryEntry<Tile> SAVANNA = BIO.register(Tile::new, "savanna");
 
 
+    public static final RegistryEntry<GenericTree> TREE = BLD.register(GenericTree::new,"tree");
 
 
 }

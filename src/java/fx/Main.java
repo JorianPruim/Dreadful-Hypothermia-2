@@ -146,13 +146,13 @@ public class Main extends Application {
         Group[][] plane = new Group[renderDistance*2][renderDistance*2];
         if(x-renderDistance<0){
             x+=renderDistance-x;
-        }else if(x+renderDistance>size) {
-            x -= renderDistance - (size - x);
+        }else if(x+renderDistance>renderedWorld.getSize()) {
+            x -= renderDistance - (renderedWorld.getSize() - x);
         }
         if(y-renderDistance<0){
             y+=renderDistance-y;
-        }else if(y+renderDistance>size){
-            y-=renderDistance-(size-y);
+        }else if(y+renderDistance>renderedWorld.getSize()){
+            y-=renderDistance-(renderedWorld.getSize()-y);
         }
         for(int i = -renderDistance; i<renderDistance; i++){
             for(int j = -renderDistance; j<renderDistance; j++){

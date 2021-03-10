@@ -43,10 +43,10 @@ public class Tile extends GameObject {
         }
         return;
     }
-    private void build(Building b){
+    public void build(Building b){
         if(this.building == null)this.building = b;
     }
-    private void destroy(){
+    public void destroy(){
         this.building = null;
     }
 

@@ -1,6 +1,7 @@
 package setup.worldgen;
 
 import setup.player.Player;
+import setup.register.Registers;
 import setup.world.Tile;
 
 import java.io.*;
@@ -8,6 +9,7 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Random;
 
 import static java.nio.file.StandardOpenOption.APPEND;
 import static java.nio.file.StandardOpenOption.CREATE;
@@ -33,6 +35,7 @@ public class World {
     }
 
     public static World generate(WorldGenSettings settings){
+        Random s = new Random(settings.seed);
         Map heat = new Map(settings.size/8,settings.minHeatDropletSize,settings.maxHeatDropletSize,settings.heatDropletDensity,settings.seed);
         Map humidity = new Map(settings.size/8,settings.minHumidityDropletSize,settings.maxHumidityDropletSize,settings.humidityDropletDensity,settings.seed);
         Tile[][] tiles = new Tile[settings.size][settings.size];
@@ -41,6 +44,9 @@ public class World {
 
                 //Place tiles according to biome type
                 tiles[i][j] = Tile.from(heat.get((int)i/8,(int)j/8),humidity.get(i/8,j/8), settings.thresholds);
+                if(Registers.TREE.get().doesGenerate(tiles[i][j],s.nextInt(1000))){
+                    tiles[i][j].build(Registers.TREE.get());
+                }
                 //TODO
 
 
