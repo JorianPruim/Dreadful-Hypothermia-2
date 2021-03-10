@@ -53,4 +53,7 @@ public class Tile extends GameObject {
     public Building getBuilding() {
         return building;
     }
+    public Entity getOccupant(){
+        return null;
+    }
 }

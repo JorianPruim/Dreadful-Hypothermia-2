@@ -1,11 +1,10 @@
 package fx;
 
 import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.control.DialogPane;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import setup.player.Player;
 import javafx.application.Application;
@@ -17,14 +16,13 @@ import javafx.stage.Stage;
 import setup.world.Tile;
 import setup.worldgen.World;
 import setup.worldgen.WorldGenSettings;
-import util.TemporaryHack;
 
 
 public class Main extends Application {
     private final int size = 250;
     private final GridPane root = new GridPane();
-    private final ScrollPane spane = new ScrollPane();
-    private final GridPane pane = new GridPane();
+    private final ScrollPane scrollfield = new ScrollPane();
+    private final GridPane field = new GridPane();
     private final GridPane interactionPane = new GridPane();
     private Player dummy = new Player(); //TODO: retrieve player from save file.
     private final int renderDistance = 10;
@@ -42,15 +40,15 @@ public class Main extends Application {
         primaryStage.setTitle("DH2");
 
 
-        pane.getColumnConstraints().add(new ColumnConstraints(imgsize));
-        pane.getRowConstraints().add(new RowConstraints(imgsize));
+        field.getColumnConstraints().add(new ColumnConstraints(imgsize));
+        field.getRowConstraints().add(new RowConstraints(imgsize));
 
 
 
-        spane.setVvalue(0.5);
-        spane.setHvalue(0.5);
+        scrollfield.setVvalue(0.5);
+        scrollfield.setHvalue(0.5);
 
-        pane.setPrefSize(imgsize*renderDistance, imgsize*renderDistance);
+        field.setPrefSize(imgsize*renderDistance, imgsize*renderDistance);
 
         /*for (int i = 0; i<size; i++){
             visualMap[i][i] = getAsset(i, i);
@@ -64,8 +62,8 @@ public class Main extends Application {
         render((int)dummy.getXCoordinate(), (int)dummy.getYCoordinate());
 
 
-        spane.setVvalue(dummy.getYCoordinate()/size);
-        spane.setHvalue(dummy.getXCoordinate()/size);
+        /*scrollfield.setVvalue(dummy.getYCoordinate()/size);
+        scrollfield.setHvalue(dummy.getXCoordinate()/size);
 
         Text text1 = new Text("dit wordt de inventory");
         Text text2 = new Text("dit s de building interacton nogwattes");
@@ -96,10 +94,36 @@ public class Main extends Application {
         column2.setPercentWidth(20);
         root.getRowConstraints().addAll(row10);
         root.getColumnConstraints().addAll(column1, column2);
-        spane.setContent(pane);
-        GridPane.setConstraints(spane, 0, 0);
+        scrollfield.setContent(field);
+        GridPane.setConstraints(scrollfield, 0, 0);
         GridPane.setConstraints(interactionPane, 1, 0);
-        root.getChildren().addAll(spane, interactionPane);
+        root.getChildren().addAll(scrollfield, interactionPane);*/
+
+
+        scrollfield.setContent(field);
+
+
+
+        Text t1 = new Text("field 1"), t2 = new Text("field 2"), t3 = new Text("field 3");
+        RowConstraints r1 = new RowConstraints(), r2 = new RowConstraints(), r3 = new RowConstraints();
+        ColumnConstraints c1 = new ColumnConstraints(), c2 = new ColumnConstraints();
+        r1.setPercentHeight(20); r2.setPercentHeight(30); r3.setPercentHeight(50);
+        c1.setPercentWidth(70); c2.setPercentWidth(30);
+
+        GridPane.setConstraints(scrollfield,0,0,1,3);
+        GridPane.setConstraints(t1,1,0);GridPane.setConstraints(t2,1,1);GridPane.setConstraints(t3,1,2);
+
+        root.getRowConstraints().addAll(r1,r2,r3);
+        root.getColumnConstraints().addAll(c1,c2);
+        root.getChildren().addAll(scrollfield,t1,t2,t3);
+        root.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderStroke.THICK)));
+
+
+
+
+
+
+
         Scene s = new Scene(root, height, width);
 
         s.setCursor(new ImageCursor(new Image("file:src/assets/tiles/missing.png")));
@@ -107,8 +131,8 @@ public class Main extends Application {
         s.setOnKeyPressed(e->handleKeyPress(e.getText(),e.isShiftDown(),e.isControlDown(),e.isAltDown()));
         s.setOnKeyReleased(e->handleKeyRelease(e.getText()));
 
-        spane.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
-        spane.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollfield.hbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollfield.vbarPolicyProperty().setValue(ScrollPane.ScrollBarPolicy.NEVER);
 
         primaryStage.setScene(s);
         primaryStage.getIcons().add(new Image("file:src/assets/tiles/missing.png"));
@@ -152,20 +176,20 @@ public class Main extends Application {
     }
 
     private void setWindow(double xCoordinate, double yCoordinate){
-        spane.setHvalue(xCoordinate/size);
-        spane.setVvalue(yCoordinate/size);
+        scrollfield.setHvalue(xCoordinate/size);
+        scrollfield.setVvalue(yCoordinate/size);
     }
 
     @Deprecated
     private void renderOld(double xd, double yd){
         int x = (int)xd;
         int y = (int)yd;
-        pane.getChildren().clear();
+        field.getChildren().clear();
         for(int i = -renderDistance; i<renderDistance; i++){
             for (int j = -renderDistance; j < renderDistance; j++) {
                 visualMap[renderDistance+i][renderDistance+j] = getAsset(x+i,y+j);
                 GridPane.setConstraints(visualMap[renderDistance+i][renderDistance+j],x+i,y+j);
-                pane.getChildren().add(visualMap[renderDistance+i][renderDistance+j]);
+                field.getChildren().add(visualMap[renderDistance+i][renderDistance+j]);
             }
         }
         System.out.println("("+x+","+y+")");
@@ -173,7 +197,7 @@ public class Main extends Application {
 
     //Technically this method *should* take World renderedWorld as parameter too
     private void render(int x, int y){
-        pane.getChildren().clear();
+        field.getChildren().clear();
         Group[][] plane = new Group[renderDistance*2][renderDistance*2];
         if(x-renderDistance<0){
             x+=renderDistance-x;
@@ -188,10 +212,15 @@ public class Main extends Application {
         for(int i = -renderDistance; i<renderDistance; i++){
             for(int j = -renderDistance; j<renderDistance; j++){
                 plane[renderDistance+i][renderDistance+j] = tileRender(renderedWorld.get(x+i,y+j));
+                if(x+i == (int)renderedWorld.player.getXCoordinate() && y+j == (int)renderedWorld.player.getYCoordinate()){
+                    plane[renderDistance+i][renderDistance+j].getChildren().add(new ImageView(new Image("file:src/assets/player.png",imgsize,imgsize,true,true)));
+                }
                 GridPane.setConstraints(plane[renderDistance+i][renderDistance+j],x+i,y+j);
-                pane.getChildren().add(plane[renderDistance+i][renderDistance+j]);
+                field.getChildren().add(plane[renderDistance+i][renderDistance+j]);
+
             }
         }
+
     }
 
     private Group tileRender(Tile tile){
@@ -208,7 +237,11 @@ public class Main extends Application {
             }
             render.getChildren().add(new ImageView(bld));
         }
+        //add render layer for entities
+
         render.setBlendMode(BlendMode.SRC_ATOP);
+
+
         return render;
 
     }

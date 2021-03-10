@@ -4,6 +4,8 @@ import setup.player.Player;
 import setup.register.Registers;
 import setup.world.Tile;
 
+import java.util.function.Predicate;
+
 public class DH2 {
   public static void main(String[] args) {
 
@@ -11,8 +13,9 @@ public class DH2 {
 //    w.export("test123");
 
 
-
   }
+
+  private DH2(){int g = 1/0;};
 }
 
 
