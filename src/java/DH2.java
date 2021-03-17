@@ -15,7 +15,7 @@ public class DH2 {
 
   }
 
-  private DH2(){int g = 1/0;};
+  public DH2(){int g = 1/0;};
 }
 
 

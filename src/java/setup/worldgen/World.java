@@ -47,6 +47,9 @@ public class World {
                 if(Registers.TREE.get().doesGenerate(tiles[i][j],s.nextInt(1000))){
                     tiles[i][j].build(Registers.TREE.get());
                 }
+                if(Registers.PEBBLE.get().doesGenerate(tiles[i][j],s.nextInt(1000))){
+                    tiles[i][j].build(Registers.PEBBLE.get());
+                }
                 //TODO
 
 

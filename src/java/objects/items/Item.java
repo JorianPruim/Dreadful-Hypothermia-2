@@ -7,19 +7,16 @@ public class Item extends GameObject {
 
     private final double size;
     private final double weight;
-    private String name;
 
-    public Item(double size, double weight, String name){
+    public Item(double size, double weight){
         super();
         this.size = size;
         this.weight = weight;
     }
-    public Item(double size, double weight){
-        this(size,weight,null);
-    }
+
 
     public Item(){
-        this(0,0,null);
+        this(0,0);
     }
 
     public double getSize() {
@@ -33,5 +30,13 @@ public class Item extends GameObject {
     @Override
     public String getName() {
         return name;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "name='" + getName() + '\'' +
+                '}';
     }
 }

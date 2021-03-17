@@ -11,7 +11,10 @@ public class Player{
     private double yCoordinate;
     private Inventory inv;
 
-    
+
+    public Player(){
+        this.inv = new Inventory();
+    }
 
     public void bind(World world){
         this.world = world;

@@ -2,7 +2,7 @@ package setup.register;
 
 public class RegistryObject {
 
-    private String name;
+    protected String name;
     public void onRegister(String n){
         this.name = n;
     }

@@ -1,11 +1,14 @@
 package fx;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.scene.Group;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import setup.player.Inventory;
 import setup.player.Player;
 import javafx.application.Application;
 import javafx.scene.ImageCursor;
@@ -20,15 +23,17 @@ import util.ImgFinder;
 
 
 public class Main extends Application {
-    private final int size = 250;
-    
-    
+
+
     private final GridPane root = new GridPane();
         private final GridPane field = new GridPane();
             private final ScrollPane mapField = new ScrollPane();
-        private final Pane invDialog = new Pane();
-            private final TilePane invField = new TilePane();
-            private final Pane invData = new Pane();
+        private final GridPane invDialog = new GridPane();
+            private final TilePane invField = new TilePane(Orientation.HORIZONTAL);
+            private final GridPane invData = new GridPane();
+                private final Text invWeight = new Text();
+                private final Text invSpace = new Text();
+                private final Text invTotalOccupants = new Text();
         private final Pane bldDialog = new Pane();
             private final Pane bldInv = new Pane();
             private final Pane bldData = new Pane();
@@ -56,7 +61,7 @@ public class Main extends Application {
 
 
         renderMap((int)dummy.getXCoordinate(), (int)dummy.getYCoordinate());
-
+        renderDialogs();
 
         setLayout();
 
@@ -83,21 +88,18 @@ public class Main extends Application {
         Scene s = new Scene(root);
 
         s.setCursor(new ImageCursor(new Image("file:src/assets/tiles/missing.png")));
-        s.setOnMouseClicked(e-> renderMap((int)dummy.getXCoordinate(), (int)dummy.getYCoordinate()));
+        s.setOnMouseClicked(e-> {
+            renderMap((int)dummy.getXCoordinate(), (int)dummy.getYCoordinate());
+            renderDialogs();
+        });
         s.setOnKeyPressed(e->handleKeyPress(e.getText(),e.isShiftDown(),e.isControlDown(),e.isAltDown()));
         s.setOnKeyReleased(e->handleKeyRelease(e.getText()));
         return s;
     }
 
     private void setLayout() {
-        Text t1 = new Text("field 1"), t2 = new Text("field 2"), t3 = new Text("field 3");
 
-        invField.setPrefTileHeight(imgsize);
-        invField.setPrefTileWidth(imgsize);
 
-        invDialog.getChildren().add(t1);
-        bldDialog.getChildren().add(t2);
-        envDialog.getChildren().add(t3);
 
         RowConstraints r1 = new RowConstraints(), r2 = new RowConstraints(), r3 = new RowConstraints();
         ColumnConstraints c1 = new ColumnConstraints(), c2 = new ColumnConstraints();
@@ -116,10 +118,25 @@ public class Main extends Application {
         bldDialog.setBorder(defaultBorder);
         envDialog.setBorder(defaultBorder);
 
+        GridPane.setConstraints(invField,0,0);
+        GridPane.setConstraints(invData,0,1);
+
+        invDialog.getChildren().addAll(invField,invData);
+
+        GridPane.setConstraints(invWeight,0,0);
+        GridPane.setConstraints(invSpace,0,1);
+        GridPane.setConstraints(invTotalOccupants,0,2);
+
+        invData.getChildren().addAll(invWeight,invSpace,invTotalOccupants);
+
         root.getRowConstraints().addAll(r1,r2,r3);
         root.getColumnConstraints().addAll(c1,c2);
         root.getChildren().addAll(mapField,invDialog,bldDialog,envDialog);
         root.setBorder(defaultBorder);
+
+        invField.setPrefTileHeight(imgsize);
+        invField.setPrefTileWidth(imgsize);
+        invField.setPrefWidth(16+320);
     }
 
     //TODO: extract to controller class?
@@ -144,9 +161,8 @@ public class Main extends Application {
                 renderMap((int)dummy.getXCoordinate(),(int)dummy.getYCoordinate());
                 break;
             default:
-                return;
         }
-
+        renderDialogs();
     }
 
 
@@ -185,7 +201,18 @@ public class Main extends Application {
 
     }
     private void renderInventoryDialog(){
-        //Todo/do/do/do
+        System.out.println("rendering");
+        Inventory inv = dummy.getInventory();
+        invField.getChildren().clear();
+        for (int i = 0; i < inv.getLength(); i++) {
+            invField.getChildren().add(new ImageView(ImgFinder.get(inv.getByIndex(i).getName(),"items",imgsize)));
+        }
+        invWeight.setText("Weight: " + inv.getWeight() + " out of " + inv.getMaxWeight());
+        invSpace.setText("Space: " + inv.getOccupiedSpace() + " out of " + inv.getMaxSize() + " occupied");
+        invTotalOccupants.setText(inv.getLength() + " items");
+
+
+
     }
     private void renderBuildingDialog(){
 
@@ -203,6 +230,22 @@ public class Main extends Application {
             render.getChildren().add(new ImageView(bld));
         }
         //add render layer for entities
+
+        render.setOnMouseClicked(e->{
+            switch(e.getButton()){
+                case NONE, MIDDLE -> {
+                }
+                case PRIMARY -> {
+                    tile.onPrimaryInteract(dummy);
+                    renderDialogs();
+
+                }
+                case SECONDARY -> {
+                    tile.onSecondaryInteract(dummy);
+                    renderDialogs();
+                }
+            }
+        });
 
         render.setBlendMode(BlendMode.SRC_ATOP);
 

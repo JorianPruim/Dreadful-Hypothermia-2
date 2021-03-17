@@ -1,12 +1,16 @@
 package setup.register;
 
 import objects.buildings.GenericTree;
+import objects.buildings.Pebble;
 import objects.items.Item;
 import setup.crafting.Knowledge;
 import setup.player.Player;
 import setup.world.Building;
 import setup.world.Generatable;
 import setup.world.Tile;
+
+
+import java.util.function.Supplier;
 
 public class Registers {
     public static Registry<Tile> BIO = new Registry<Tile>();
@@ -29,6 +33,11 @@ public class Registers {
 
 
     public static final RegistryEntry<GenericTree> TREE = BLD.register(GenericTree::new,"tree");
-    public static final RegistryEntry<Item> WOOD =ITM.register(Item::new,"wood");
+    public static final RegistryEntry<Item> WOOD =ITM.register(()->new Item(3,1),"wood");
+
+    public static final RegistryEntry<Pebble> PEBBLE = BLD.register(Pebble::new,"pebble");
+    public static final RegistryEntry<Item> ITEMPEBBLE = ITM.register(()->new Item(0.2,0.5),"pebble");
+
+
 
 }
