@@ -24,14 +24,15 @@ public class GenericTree extends GeneratableBuilding {
 
 
     @Override
-    public void onPrimaryInteract(Player p) {
+    public void primaryInteract(Player p) {
 
-        p.getInventory().addToInv(Registers.WOOD.get(),5);
-        this.destroy();
+        if(p.getInventory().addToInv(Registers.WOOD.get(),5) != 5){
+            this.destroy();
+        }
     }
 
     @Override
-    public void onSecondaryInteract(Player p) {
+    public void secondaryInteract(Player p) {
 
     }
 

@@ -9,15 +9,14 @@ import java.util.stream.Stream;
 public class Pebble extends GeneratableBuilding {
 
     @Override
-    public void onPrimaryInteract(Player p) {
-        p.getInventory().addToInv(Registers.ITEMPEBBLE.get());
-        if (Math.random() < 0.3){
+    public void primaryInteract(Player p) {
+        if(p.getInventory().addToInv(Registers.ITEMPEBBLE.get()) && Math.random() < 0.3){
             this.destroy();
         }
     }
 
     @Override
-    public void onSecondaryInteract(Player p) {
+    public void secondaryInteract(Player p) {
 
     }
 

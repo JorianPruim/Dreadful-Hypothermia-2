@@ -11,6 +11,9 @@ public class Player{
     private double yCoordinate;
     private Inventory inv;
 
+    public double HP;
+    public double reach = 3;
+
 
     public Player(){
         this.inv = new Inventory();

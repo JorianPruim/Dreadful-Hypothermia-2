@@ -16,10 +16,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import setup.register.RegistryObject;
 import setup.world.Tile;
 import setup.worldgen.World;
 import setup.worldgen.WorldGenSettings;
 import util.ImgFinder;
+
+import java.io.*;
 
 
 public class Main extends Application {
@@ -37,8 +40,10 @@ public class Main extends Application {
         private final Pane bldDialog = new Pane();
             private final Pane bldInv = new Pane();
             private final Pane bldData = new Pane();
-        private final Pane envDialog = new Pane();
-
+        private final GridPane envDialog = new GridPane();
+            private final Pane playerEnvironment = new Pane();
+            private final GridPane guideEntry = new GridPane();
+                private final Text entry = new Text();
 
 
 
@@ -49,6 +54,9 @@ public class Main extends Application {
     private final int renderDistance = 10;
     private final int imgsize = 32;
     private final World renderedWorld = World.generate(WorldGenSettings.getInstance());
+
+    private RegistryObject openEntry;
+
     @Override
     public void start(Stage primaryStage) {
 
@@ -99,8 +107,6 @@ public class Main extends Application {
 
     private void setLayout() {
 
-
-
         RowConstraints r1 = new RowConstraints(), r2 = new RowConstraints(), r3 = new RowConstraints();
         ColumnConstraints c1 = new ColumnConstraints(), c2 = new ColumnConstraints();
         r1.setPercentHeight(20);
@@ -109,7 +115,7 @@ public class Main extends Application {
         c1.setPercentWidth(70);
         c2.setPercentWidth(30);
 
-
+        //DIALOG ROOT CONSTRAINTS + BORDERS
         GridPane.setConstraints(mapField,0,0,1,3);
         GridPane.setConstraints(invDialog,1,0);
         GridPane.setConstraints(bldDialog,1,1);
@@ -118,25 +124,38 @@ public class Main extends Application {
         bldDialog.setBorder(defaultBorder);
         envDialog.setBorder(defaultBorder);
 
+        //DIALOG CONSTRAINTS
+        //Inventory dialog
         GridPane.setConstraints(invField,0,0);
         GridPane.setConstraints(invData,0,1);
+        //Environment dialog
+        GridPane.setConstraints(guideEntry,0,0);
+        GridPane.setConstraints(playerEnvironment,0,1);
 
         invDialog.getChildren().addAll(invField,invData);
+        envDialog.getChildren().addAll(guideEntry,playerEnvironment);
 
+        //INVENTORY CONSTRAINTS
         GridPane.setConstraints(invWeight,0,0);
         GridPane.setConstraints(invSpace,0,1);
         GridPane.setConstraints(invTotalOccupants,0,2);
+        invField.setPrefTileHeight(imgsize);
+        invField.setPrefTileWidth(imgsize);
+        invField.setPrefWidth(16+320);
 
         invData.getChildren().addAll(invWeight,invSpace,invTotalOccupants);
 
+        //ENVIRONMENT CONSTRAINTS
+
+
+
+        //ROOT
         root.getRowConstraints().addAll(r1,r2,r3);
         root.getColumnConstraints().addAll(c1,c2);
         root.getChildren().addAll(mapField,invDialog,bldDialog,envDialog);
         root.setBorder(defaultBorder);
 
-        invField.setPrefTileHeight(imgsize);
-        invField.setPrefTileWidth(imgsize);
-        invField.setPrefWidth(16+320);
+
     }
 
     //TODO: extract to controller class?
@@ -201,7 +220,6 @@ public class Main extends Application {
 
     }
     private void renderInventoryDialog(){
-        System.out.println("rendering");
         Inventory inv = dummy.getInventory();
         invField.getChildren().clear();
         for (int i = 0; i < inv.getLength(); i++) {
@@ -216,8 +234,33 @@ public class Main extends Application {
     }
     private void renderBuildingDialog(){
 
+
+
     }
     private void renderEnvironmentDialog(){
+        guideEntry.getChildren().clear();
+        if(openEntry!=null){
+            System.out.println("reading guide entry for object " + openEntry.getName());
+            File entryFile = new File("src/assets/guide-entries/"+openEntry.getName()+".txt");
+            try {
+                BufferedReader reader = new BufferedReader(new FileReader(entryFile));
+                String entrytext = reader.lines().reduce("",(a,b)->a+"\n"+b);
+                entry.setText(entrytext);
+            } catch (FileNotFoundException e) {
+                try {
+                    BufferedReader reader = new BufferedReader(new FileReader(new File("src/assets/guide-entries/none.txt")));
+                    String entrytext = reader.lines().reduce("",(a,b)->a+"\n"+b);
+                    entry.setText(entrytext);
+                } catch (FileNotFoundException e2) {
+                    e2.printStackTrace();
+                    entry.setText("");
+                }
+            }
+        }else{
+            entry.setText("");
+        }
+
+        guideEntry.getChildren().add(entry);
 
     }
 
@@ -233,12 +276,21 @@ public class Main extends Application {
 
         render.setOnMouseClicked(e->{
             switch(e.getButton()){
-                case NONE, MIDDLE -> {
+                case NONE-> {
                 }
                 case PRIMARY -> {
                     tile.onPrimaryInteract(dummy);
                     renderDialogs();
 
+                }
+                case MIDDLE -> {
+                    if(tile.getBuilding()!=null){
+                        openEntry = tile.getBuilding();
+                    }else if(tile.getOccupant()!=null){
+                        openEntry = tile.getOccupant();
+                    }else{
+                        openEntry = tile;
+                    }
                 }
                 case SECONDARY -> {
                     tile.onSecondaryInteract(dummy);

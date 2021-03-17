@@ -44,6 +44,7 @@ public class World {
 
                 //Place tiles according to biome type
                 tiles[i][j] = Tile.from(heat.get((int)i/8,(int)j/8),humidity.get(i/8,j/8), settings.thresholds);
+                tiles[i][j].setCoords(i,j);
                 if(Registers.TREE.get().doesGenerate(tiles[i][j],s.nextInt(1000))){
                     tiles[i][j].build(Registers.TREE.get());
                 }

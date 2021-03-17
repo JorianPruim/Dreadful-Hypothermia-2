@@ -3,7 +3,6 @@ package setup.world;
 import objects.GameObject;
 import setup.player.Player;
 import setup.register.Registers;
-import setup.register.RegistryObject;
 import setup.worldgen.WorldGenSettings;
 
 public class Tile extends GameObject {
@@ -26,9 +25,12 @@ public class Tile extends GameObject {
     private boolean isVisible;
     private Building building;
     private Subterrain sub;
-    //private int heat;//one implementation possibility
-    //private int hum;
+    public int x, y;
 
+
+    public void setCoords(int x, int y){
+        this.x = x; this.y = y;
+    }
 
 
     public void onPrimaryInteract(Player p){

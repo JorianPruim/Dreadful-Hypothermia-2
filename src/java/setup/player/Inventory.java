@@ -27,6 +27,7 @@ public class Inventory {
 
         Item total = getItemTotal();
         if(total.getWeight()+item.getWeight() > maxWeight || total.getSize()+item.getSize() > maxSize){
+            System.out.println(false);
             return false;
         }else{
             contents.add(item);
@@ -65,11 +66,11 @@ public class Inventory {
     }
 
     public double getWeight(){
-        return getItemTotal().getWeight();
+        return Math.round(getItemTotal().getWeight()*1e5)/1e5;
     }
 
     public double getOccupiedSpace(){
-        return getItemTotal().getSize();
+        return Math.round(getItemTotal().getSize()*1e5)/1e5;
     }
 
     public double getMaxWeight() {
