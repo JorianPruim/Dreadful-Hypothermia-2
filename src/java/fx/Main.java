@@ -95,7 +95,7 @@ public class Main extends Application {
     private Scene setScene() {
         Scene s = new Scene(root);
 
-        s.setCursor(new ImageCursor(new Image("file:src/assets/tiles/missing.png")));
+        s.setCursor(new ImageCursor(new Image("file:src/assets/cursor.png")));
         s.setOnMouseClicked(e-> {
             renderMap((int)dummy.getXCoordinate(), (int)dummy.getYCoordinate());
             renderDialogs();
@@ -223,7 +223,26 @@ public class Main extends Application {
         Inventory inv = dummy.getInventory();
         invField.getChildren().clear();
         for (int i = 0; i < inv.getLength(); i++) {
-            invField.getChildren().add(new ImageView(ImgFinder.get(inv.getByIndex(i).getName(),"items",imgsize)));
+            Group g = new Group();
+            ImageView image = new ImageView(ImgFinder.get(inv.getByIndex(i).getName(),"items",imgsize));
+            g.getChildren().add(image);
+            if(i == inv.getSelectedIndex()){
+                g.getChildren().add(new ImageView(ImgFinder.get("select",imgsize)));
+            }
+            int i2 = i;
+            image.setOnMouseClicked(e->{
+                switch (e.getButton()){
+
+                    case NONE, MIDDLE, SECONDARY -> {
+                    }
+                    case PRIMARY -> {
+                        dummy.getInventory().select(i2);
+                        renderDialogs();
+                    }
+                }
+            });
+
+            invField.getChildren().add(g);
         }
         invWeight.setText("Weight: " + inv.getWeight() + " out of " + inv.getMaxWeight());
         invSpace.setText("Space: " + inv.getOccupiedSpace() + " out of " + inv.getMaxSize() + " occupied");

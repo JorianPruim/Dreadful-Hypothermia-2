@@ -2,7 +2,9 @@ package setup.register;
 
 import objects.buildings.GenericTree;
 import objects.buildings.Pebble;
+import objects.buildings.WoodPile;
 import objects.items.Item;
+import objects.items.ItemWood;
 import setup.crafting.Knowledge;
 import setup.player.Player;
 import setup.world.Building;
@@ -33,7 +35,8 @@ public class Registers {
 
 
     public static final RegistryEntry<GenericTree> TREE = BLD.register(GenericTree::new,"tree");
-    public static final RegistryEntry<Item> WOOD =ITM.register(()->new Item(3,1),"wood");
+    public static final RegistryEntry<ItemWood> WOOD =ITM.register(ItemWood::new,"wood");
+    public static final RegistryEntry<WoodPile> WOODPILE = BLD.register(WoodPile::new,"woodpile");
 
     public static final RegistryEntry<Pebble> PEBBLE = BLD.register(Pebble::new,"pebble");
     public static final RegistryEntry<Item> ITEMPEBBLE = ITM.register(()->new Item(0.2,0.5),"pebble");

@@ -14,7 +14,7 @@ public class DH2 {
 
 //    World w = World.generate(WorldGenSettings.getInstance());
 //    w.export("test123");
-
+    System.out.println(Double.MAX_VALUE);
 
   }
 

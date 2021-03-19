@@ -9,14 +9,14 @@ public class Player{
     private double walkSpeed = 0.5;
     private double xCoordinate;
     private double yCoordinate;
-    private Inventory inv;
+    private final Inventory inv;
 
     public double HP;
     public double reach = 3;
 
 
     public Player(){
-        this.inv = new Inventory();
+        this.inv = new Inventory(10,10);
     }
 
     public void bind(World world){

@@ -39,4 +39,9 @@ public class Item extends GameObject {
                 "name='" + getName() + '\'' +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof Item && ((Item) obj).getName().equals(this.getName());
+    }
 }

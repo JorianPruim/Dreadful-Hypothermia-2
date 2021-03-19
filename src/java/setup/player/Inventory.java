@@ -12,9 +12,11 @@ public class Inventory {
     double maxWeight;
     double maxSize;
     List<Item> contents;
+    Item selected;
+    int selectedIndex = -1;
 
     public Inventory(){
-        this(10,10);
+        this(Double.MAX_VALUE,Double.MAX_VALUE);
     }
 
     public Inventory(double maxSize, double maxWeight){
@@ -22,6 +24,8 @@ public class Inventory {
         this.maxWeight = maxWeight;
         this.contents = new ArrayList<>();
     }
+
+
 
     public boolean addToInv(Item item){
 
@@ -33,11 +37,6 @@ public class Inventory {
             contents.add(item);
             return true;
         }
-    }
-
-    private Item getItemTotal() {
-        Item total = contents.stream().reduce(new Item(),(a,b)->new Item(a.getSize()+b.getSize(),a.getWeight()+b.getWeight()));
-        return total;
     }
 
     public int addToInv(Item item, int quantity){
@@ -55,6 +54,37 @@ public class Inventory {
             }
         }
         return residue;
+    }
+
+    public boolean removeFromInv(Item item){
+        this.selectedIndex = -1;
+        this.selected = null;
+        return contents.remove(item);
+    }
+
+    public int removeFromInv(Item item, int quantity){
+        while(quantity!=0&&removeFromInv(item)){
+            quantity--;
+        }
+        return quantity;
+    }
+
+    public void select(int i){
+        this.selected = contents.get(i);
+        this.selectedIndex = i;
+    }
+
+    public Item getSelected() {
+        return selected;
+    }
+
+    public int getSelectedIndex() {
+        return selectedIndex;
+    }
+
+    private Item getItemTotal() {
+        Item total = contents.stream().reduce(new Item(),(a,b)->new Item(a.getSize()+b.getSize(),a.getWeight()+b.getWeight()));
+        return total;
     }
 
     public int getLength(){

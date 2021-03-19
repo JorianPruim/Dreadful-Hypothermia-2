@@ -1,6 +1,7 @@
 package setup.world;
 
 import objects.GameObject;
+import objects.items.Placeable;
 import setup.player.Player;
 import setup.register.Registers;
 import setup.worldgen.WorldGenSettings;
@@ -42,14 +43,18 @@ public class Tile extends GameObject {
     public void onSecondaryInteract(Player p){
         if(this.building!=null){
             this.building.onSecondaryInteract(p);
+        }else if(p.getInventory().getSelected()!=null && p.getInventory().getSelected() instanceof Placeable){
+            ((Placeable) p.getInventory().getSelected()).onPlace(this,p);
         }
         return;
     }
-    public void build(Building b){
+    public boolean build(Building b){
         if(this.building == null){
             this.building = b;
             b.setHost(this);
+            return true;
         }
+        return false;
     }
     public void destroy(){
         this.building = null;
