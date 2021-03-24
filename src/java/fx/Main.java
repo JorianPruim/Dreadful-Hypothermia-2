@@ -285,10 +285,10 @@ public class Main extends Application {
 
     private Group tileRender(Tile tile){
         Group render = new Group();
-        Image img = ImgFinder.get(tile.getName(),"tiles", imgsize);
+        Image img = ImgFinder.get(tile.getAssetName(),"tiles", imgsize);
         render.getChildren().add(new ImageView(img));
         if(tile.getBuilding()!=null){
-            Image bld = ImgFinder.get(tile.getBuilding().getName(),"buildings", imgsize);
+            Image bld = ImgFinder.get(tile.getBuilding().getAssetName(),"buildings", imgsize);
             render.getChildren().add(new ImageView(bld));
         }
         //add render layer for entities

@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Random;
+import java.util.stream.Stream;
 
 import static java.nio.file.StandardOpenOption.APPEND;
 import static java.nio.file.StandardOpenOption.CREATE;
@@ -44,30 +45,65 @@ public class World {
 
                 //Place tiles according to biome type
                 tiles[i][j] = Tile.from(heat.get((int)i/8,(int)j/8),humidity.get(i/8,j/8), settings.thresholds);
-                tiles[i][j].setCoords(i,j);
-                if(Registers.TREE.get().doesGenerate(tiles[i][j],s.nextInt(1000))){
-                    tiles[i][j].build(Registers.TREE.get());
-                }
-                if(Registers.PEBBLE.get().doesGenerate(tiles[i][j],s.nextInt(1000))){
-                    tiles[i][j].build(Registers.PEBBLE.get());
-                }
+
+
+
                 //TODO
 
 
             }
         }
+        addDrip(s,tiles,settings);
 
 
 
         World out = new World(tiles);
+
+        for (int i = 0; i < settings.size; i++) {
+            for (int j = 0; j < settings.size; j++) {
+                tiles[i][j].setCoords(i,j,out);
+                setTileData(s, tiles, i, j);
+            }
+        }
+
         out.heat = heat;
         out.hum = humidity;
         return out;
 
     }
 
+    private static void addDrip(Random s, Tile[][] tiles, WorldGenSettings settings) {
+        Map lakefall = new Map(tiles.length, 20,50,1e-2,s.nextInt());
+        for (int i = 0; i < tiles.length; i++) {
+            for (int j = 0; j < tiles.length; j++) {
+                final String nome = tiles[i][j].getName();
+                if(lakefall.getData()[i][j]>3 && Stream.of("desert","savanna","swamp").noneMatch(nome::equals)){
+                    tiles[i][j] = Registers.WATER.get();
+                }else if(lakefall.getData()[i][j]>2 && nome.equals("swamp")){
+                    tiles[i][j] = Registers.WATER.get();
+                }
+            }
+        }
+    }
+
+    private static void setTileData(Random s, Tile[][] tiles, int i, int j) {
+        if(Registers.TREE.get().doesGenerate(tiles[i][j], s.nextInt(1000))){
+            tiles[i][j].build(Registers.TREE.get());
+        }
+        if(Registers.PEBBLE.get().doesGenerate(tiles[i][j], s.nextInt(1000))){
+            tiles[i][j].build(Registers.PEBBLE.get());
+        }
+        if(Registers.REEDS.get().doesGenerate(tiles[i][j], s.nextInt(100))){
+            tiles[i][j].build(Registers.REEDS.get());
+        }
+    }
+
     public Tile get(int x, int y){
-        return tiles[x][y];
+        try {
+            return tiles[x][y];
+        }catch(IndexOutOfBoundsException e){
+            return Registers.WATER.get();
+        }
     }
 
 

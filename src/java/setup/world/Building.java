@@ -18,6 +18,7 @@ public abstract class Building extends GameObject{
 
     public Building() {
         super();
+        this.addType("building");
     }
 
     public void onPrimaryInteract(Player p){

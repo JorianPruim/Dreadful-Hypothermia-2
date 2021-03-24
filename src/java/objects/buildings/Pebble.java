@@ -27,7 +27,7 @@ public class Pebble extends GeneratableBuilding {
 
     @Override
     public boolean doesGenerate(Tile host, int seedContract) {
-        if(Stream.of("jungle","snow","swamp","tundra","missing").anyMatch(e->e.equals(host.getName()))){
+        if(Stream.of("jungle","snow","swamp","tundra","missing","water").anyMatch(e->e.equals(host.getName()))){
             return false;
         }else{
             return seedContract < 5;

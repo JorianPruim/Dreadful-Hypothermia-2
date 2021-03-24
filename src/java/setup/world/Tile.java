@@ -4,7 +4,11 @@ import objects.GameObject;
 import objects.items.Placeable;
 import setup.player.Player;
 import setup.register.Registers;
+import setup.worldgen.World;
 import setup.worldgen.WorldGenSettings;
+
+import java.util.Arrays;
+import java.util.stream.Stream;
 
 public class Tile extends GameObject {
 
@@ -27,10 +31,11 @@ public class Tile extends GameObject {
     private Building building;
     private Subterrain sub;
     public int x, y;
+    private World host;
 
 
-    public void setCoords(int x, int y){
-        this.x = x; this.y = y;
+    public void setCoords(int x, int y, World willItRepresentAHostQuestionmarkIThinkItRepresentsTheHostPeriod){
+        this.x = x; this.y = y; this.host = willItRepresentAHostQuestionmarkIThinkItRepresentsTheHostPeriod;
     }
 
 
@@ -56,6 +61,11 @@ public class Tile extends GameObject {
         }
         return false;
     }
+
+    public boolean hasNeighbour(String tile){
+        return Arrays.asList(host.get(this.x + 1, this.y).getName(), host.get(this.x - 1, this.y).getName(), host.get(this.x, this.y + 1).getName(), host.get(this.x, this.y - 1).getName()).contains(tile);
+    }
+
     public void destroy(){
         this.building = null;
     }

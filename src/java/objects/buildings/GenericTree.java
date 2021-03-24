@@ -13,10 +13,12 @@ public class GenericTree extends GeneratableBuilding {
 
     @Override
     public boolean doesGenerate(Tile host,int seedContract) {
-        if(Stream.of("jungle","forest","taiga").anyMatch(e-> e.equals(host.getName()))){
+        if(Stream.of("jungle","forest","taiga","swamp").anyMatch(e-> e.equals(host.getName()))){
             return seedContract<250;
-        }else if(Stream.of("plains","savanna","tundra","swamp").anyMatch(e->e.equals(host.getName()))){
+        }else if(Stream.of("savanna","tundra", "snow").anyMatch(e->e.equals(host.getName()))){
             return seedContract<2;
+        }else if(host.getName().equals("plains")){
+            return seedContract<6;
         }else{
             return false;
         }
@@ -24,11 +26,23 @@ public class GenericTree extends GeneratableBuilding {
 
 
     @Override
+    public String getAssetName() {
+        //Whack.
+        return this.getName() + this.host.getName();
+    }
+
+    @Override
     public void primaryInteract(Player p) {
 
-        if(p.getInventory().addToInv(Registers.WOOD.get(),5) != 5){
+        if(p.getInventory().getSelected() != null && p.getInventory().getSelected().hasType("axe")){
+            p.getInventory().addToInv(Registers.WOOD.get(),5);
             this.destroy();
+        }else{
+            p.getInventory().addToInv(Registers.STICK.get());
+            if(Math.random()<0.2)this.destroy();
         }
+
+
     }
 
     @Override

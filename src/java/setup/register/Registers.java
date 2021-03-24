@@ -2,6 +2,7 @@ package setup.register;
 
 import objects.buildings.GenericTree;
 import objects.buildings.Pebble;
+import objects.buildings.Reeds;
 import objects.buildings.WoodPile;
 import objects.items.Item;
 import objects.items.ItemWood;
@@ -21,7 +22,7 @@ public class Registers {
     public static Registry<Item> ITM = new Registry<Item>();
 
     //entries go here.
-    // public static final RegistryEntry<Item> WOODITEM = ITM.register(Item::new,"wood");
+    //public static final RegistryEntry<Type> NAME = REGISTRY.register(Constructor::reference, name);
 
     public static final RegistryEntry<Tile> DESERT = BIO.register(Tile::new, "desert");
     public static final RegistryEntry<Tile> FOREST = BIO.register(Tile::new, "forest");
@@ -32,11 +33,17 @@ public class Registers {
     public static final RegistryEntry<Tile> TUNDRA = BIO.register(Tile::new, "tundra");
     public static final RegistryEntry<Tile> TAIGA = BIO.register(Tile::new, "taiga");
     public static final RegistryEntry<Tile> SAVANNA = BIO.register(Tile::new, "savanna");
+    public static final RegistryEntry<Tile> WATER = BIO.register(Tile::new,"water");
 
 
     public static final RegistryEntry<GenericTree> TREE = BLD.register(GenericTree::new,"tree");
     public static final RegistryEntry<ItemWood> WOOD =ITM.register(ItemWood::new,"wood");
     public static final RegistryEntry<WoodPile> WOODPILE = BLD.register(WoodPile::new,"woodpile");
+    public static final RegistryEntry<Item> STICK = ITM.register(()->new Item(0.1,0.1), "stick");
+
+    public static final RegistryEntry<Reeds> REEDS = BLD.register(Reeds::new,"reeds");
+    public static final RegistryEntry<Item> ITEMREEDS = ITM.register(()->new Item(0.1,0.2),"reeds");
+
 
     public static final RegistryEntry<Pebble> PEBBLE = BLD.register(Pebble::new,"pebble");
     public static final RegistryEntry<Item> ITEMPEBBLE = ITM.register(()->new Item(0.2,0.5),"pebble");
