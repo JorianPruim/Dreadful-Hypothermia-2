@@ -4,9 +4,11 @@ import objects.buildings.GenericTree;
 import objects.buildings.Pebble;
 import objects.buildings.Reeds;
 import objects.buildings.WoodPile;
+import objects.items.Axe;
 import objects.items.Item;
 import objects.items.ItemWood;
 import setup.crafting.Knowledge;
+import setup.crafting.Recipe;
 import setup.player.Player;
 import setup.world.Building;
 import setup.world.Generatable;
@@ -20,6 +22,7 @@ public class Registers {
     public static Registry<Knowledge> KWL = new Registry<Knowledge>();
     public static Registry<Building> BLD = new Registry<Building>();
     public static Registry<Item> ITM = new Registry<Item>();
+    public static Registry<Recipe> RCP = new Registry<Recipe>();
 
     //entries go here.
     //public static final RegistryEntry<Type> NAME = REGISTRY.register(Constructor::reference, name);
@@ -40,6 +43,7 @@ public class Registers {
     public static final RegistryEntry<ItemWood> WOOD =ITM.register(ItemWood::new,"wood");
     public static final RegistryEntry<WoodPile> WOODPILE = BLD.register(WoodPile::new,"woodpile");
     public static final RegistryEntry<Item> STICK = ITM.register(()->new Item(0.1,0.1), "stick");
+    public static final RegistryEntry<Item> AXESIMPLE = ITM.register(Axe::new,"axesimple");
 
     public static final RegistryEntry<Reeds> REEDS = BLD.register(Reeds::new,"reeds");
     public static final RegistryEntry<Item> ITEMREEDS = ITM.register(()->new Item(0.1,0.2),"reeds");
@@ -48,6 +52,8 @@ public class Registers {
     public static final RegistryEntry<Pebble> PEBBLE = BLD.register(Pebble::new,"pebble");
     public static final RegistryEntry<Item> ITEMPEBBLE = ITM.register(()->new Item(0.2,0.5),"pebble");
 
+
+    public static final RegistryEntry<Recipe> RECIPEAXE = RCP.register(()->new Recipe(AXESIMPLE.get(),ITEMREEDS.get(),STICK.get(),ITEMPEBBLE.get()),"r_axe");
 
 
 }

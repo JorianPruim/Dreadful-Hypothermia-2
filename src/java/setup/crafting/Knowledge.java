@@ -22,4 +22,10 @@ public class Knowledge extends RegistryObject {
     public String getName() {
         return name;
     }
+
+
+
+
+
+
 }

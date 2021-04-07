@@ -1,6 +1,10 @@
 package setup.player;
 
+import setup.crafting.Knowledge;
 import setup.worldgen.World;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Player{
 
@@ -14,9 +18,11 @@ public class Player{
     public double HP;
     public double reach = 3;
 
+    public List<Knowledge> k = new ArrayList<>();
 
     public Player(){
         this.inv = new Inventory(10,10);
+        this.k.add(Knowledge.ROOT);
     }
 
     public void bind(World world){
@@ -57,6 +63,9 @@ public class Player{
         return inv;
     }
 
+    public boolean knows(Knowledge kn){
+        return !(k.stream().filter(e->e.getName().equals(kn.getName())).toArray().length==0);
+    }
 
 
 

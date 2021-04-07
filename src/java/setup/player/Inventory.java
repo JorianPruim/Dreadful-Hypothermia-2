@@ -110,4 +110,21 @@ public class Inventory {
     public double getMaxSize() {
         return maxSize;
     }
+
+    public boolean containsAll(List<Item> c){
+        List<Item> copy = new ArrayList<>(this.contents);
+        for(Item i : c){
+            if(!copy.contains(i)) {
+                return false;
+            }else{
+                copy.remove(i);
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return contents.toString();
+    }
 }

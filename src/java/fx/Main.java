@@ -8,6 +8,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import objects.buildings.Station;
+import objects.items.Item;
+import setup.crafting.Recipe;
 import setup.player.Inventory;
 import setup.player.Player;
 import javafx.application.Application;
@@ -16,6 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import setup.register.Registers;
 import setup.register.RegistryObject;
 import setup.world.Tile;
 import setup.worldgen.World;
@@ -23,6 +27,8 @@ import setup.worldgen.WorldGenSettings;
 import util.ImgFinder;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Main extends Application {
@@ -37,6 +43,8 @@ public class Main extends Application {
                 private final Text invWeight = new Text();
                 private final Text invSpace = new Text();
                 private final Text invTotalOccupants = new Text();
+        private final GridPane craftDialog = new GridPane();
+            private final TilePane craftField = new TilePane(Orientation.HORIZONTAL);
         private final Pane bldDialog = new Pane();
             private final Pane bldInv = new Pane();
             private final Pane bldData = new Pane();
@@ -44,7 +52,6 @@ public class Main extends Application {
             private final Pane playerEnvironment = new Pane();
             private final GridPane guideEntry = new GridPane();
                 private final Text entry = new Text();
-
 
 
     Border defaultBorder = new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderStroke.THIN));
@@ -56,6 +63,7 @@ public class Main extends Application {
     private final World renderedWorld = World.generate(WorldGenSettings.getInstance());
 
     private RegistryObject openEntry;
+
 
     @Override
     public void start(Stage primaryStage) {
@@ -107,20 +115,23 @@ public class Main extends Application {
 
     private void setLayout() {
 
-        RowConstraints r1 = new RowConstraints(), r2 = new RowConstraints(), r3 = new RowConstraints();
+        RowConstraints r1 = new RowConstraints(), r2 = new RowConstraints(), r3 = new RowConstraints(), r4 = new RowConstraints();
         ColumnConstraints c1 = new ColumnConstraints(), c2 = new ColumnConstraints();
-        r1.setPercentHeight(20);
-        r2.setPercentHeight(30);
-        r3.setPercentHeight(50);
+        r1.setPercentHeight(25);
+        r2.setPercentHeight(25);
+        r3.setPercentHeight(25);
+        r4.setPercentHeight(25);
         c1.setPercentWidth(70);
         c2.setPercentWidth(30);
 
         //DIALOG ROOT CONSTRAINTS + BORDERS
         GridPane.setConstraints(mapField,0,0,1,3);
         GridPane.setConstraints(invDialog,1,0);
-        GridPane.setConstraints(bldDialog,1,1);
-        GridPane.setConstraints(envDialog,1,2);
+        GridPane.setConstraints(craftDialog, 1, 1);
+        GridPane.setConstraints(bldDialog,1,2);
+        GridPane.setConstraints(envDialog,1,3);
         invDialog.setBorder(defaultBorder);
+        craftDialog.setBorder(defaultBorder);
         bldDialog.setBorder(defaultBorder);
         envDialog.setBorder(defaultBorder);
 
@@ -128,11 +139,15 @@ public class Main extends Application {
         //Inventory dialog
         GridPane.setConstraints(invField,0,0);
         GridPane.setConstraints(invData,0,1);
+        //Crafting dialog
+        GridPane.setConstraints(craftField,0,0);
+
         //Environment dialog
         GridPane.setConstraints(guideEntry,0,0);
         GridPane.setConstraints(playerEnvironment,0,1);
 
         invDialog.getChildren().addAll(invField,invData);
+        craftDialog.getChildren().addAll(craftField);
         envDialog.getChildren().addAll(guideEntry,playerEnvironment);
 
         //INVENTORY CONSTRAINTS
@@ -145,14 +160,17 @@ public class Main extends Application {
 
         invData.getChildren().addAll(invWeight,invSpace,invTotalOccupants);
 
+        //CRAFTING CONSTRAINTS
+
+
         //ENVIRONMENT CONSTRAINTS
 
 
 
         //ROOT
-        root.getRowConstraints().addAll(r1,r2,r3);
+        root.getRowConstraints().addAll(r1,r2,r3,r4);
         root.getColumnConstraints().addAll(c1,c2);
-        root.getChildren().addAll(mapField,invDialog,bldDialog,envDialog);
+        root.getChildren().addAll(mapField,invDialog,craftDialog,bldDialog,envDialog);
         root.setBorder(defaultBorder);
 
 
@@ -179,6 +197,8 @@ public class Main extends Application {
                 dummy.moveIn((byte) 1);
                 renderMap((int)dummy.getXCoordinate(),(int)dummy.getYCoordinate());
                 break;
+            case "q":
+                System.out.println("break");
             default:
         }
         renderDialogs();
@@ -187,6 +207,7 @@ public class Main extends Application {
 
     private void renderDialogs(){
         renderInventoryDialog();
+        renderCraftingDialog();
         renderBuildingDialog();
         renderEnvironmentDialog();
     }
@@ -248,6 +269,37 @@ public class Main extends Application {
         invSpace.setText("Space: " + inv.getOccupiedSpace() + " out of " + inv.getMaxSize() + " occupied");
         invTotalOccupants.setText(inv.getLength() + " items");
 
+
+
+    }
+    private void renderCraftingDialog(){
+        craftField.getChildren().clear();
+
+        Inventory inv = dummy.getInventory();
+        List<Station> nearStations = new ArrayList<>();
+        //yeh, this will work somehow
+        for (int i = (int) (dummy.getXCoordinate()-2); i < dummy.getXCoordinate()+2; i++) {
+            for (int j = (int) (dummy.getYCoordinate()-2); j < dummy.getYCoordinate()+2; j++) {
+                if(renderedWorld.get(i,j).getBuilding() instanceof Station){
+                    nearStations.add((Station) renderedWorld.get(i,j).getBuilding());
+                }
+            }
+        }
+        List<Recipe> craftable = new ArrayList<>();
+        Registers.RCP.forEachObject(recipe -> {
+            if (recipe.isCraftable(dummy, nearStations)) {
+                craftable.add(recipe);
+            }
+        });
+
+        for (Recipe r : craftable) {
+            ImageView image = new ImageView(ImgFinder.get(r.out.getName(),"items",imgsize));
+            image.setOnMouseClicked(e->{
+                r.craft(dummy.getInventory());
+                renderDialogs();
+            });
+            craftField.getChildren().add(image);
+        }
 
 
     }

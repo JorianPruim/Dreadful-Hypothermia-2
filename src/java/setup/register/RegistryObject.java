@@ -24,4 +24,12 @@ public class RegistryObject {
     //plz no instance...
     protected RegistryObject(){}
 
+    public boolean equals(RegistryObject obj) {
+        return this.getName().equals(obj.getName());
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        return obj instanceof RegistryObject && this.getName().equals(obj.toString());
+    }
 }

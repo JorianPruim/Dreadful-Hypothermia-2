@@ -7,6 +7,7 @@ import setup.world.Tile;
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.function.Predicate;
 
 public class DH2 {
@@ -14,11 +15,11 @@ public class DH2 {
 
 //    World w = World.generate(WorldGenSettings.getInstance());
 //    w.export("test123");
-    System.out.println(Double.MAX_VALUE);
+
+    System.out.println(Arrays.asList(1,2,3).containsAll(Arrays.asList(1,1)));
+
 
   }
 
-  public DH2(){int g = 1/0;};
+  private DH2(){};
 }
-
-
