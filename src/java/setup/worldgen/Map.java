@@ -17,6 +17,8 @@ public class Map{
     Random random;
 
 
+
+
     /**
      * Default constructor returning a {@code Map} with the given architecture.
      * A {@code map} consists of "droplets" with a random size between minDropSize and maxDropSize and have a chance to spawn at a given point with a chance of dropletDensity.
@@ -39,6 +41,10 @@ public class Map{
             }
         }
 
+    }
+
+    public Map(WorldGenSettings.OreMapSettings ore, int size, int seed){
+        this(size,ore.minDropSize,ore.maxDropSize,ore.density,seed);
     }
 
 

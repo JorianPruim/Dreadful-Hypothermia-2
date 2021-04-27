@@ -1,5 +1,6 @@
 package setup.worldgen;
 
+import objects.ores.Ore;
 import setup.player.Player;
 import setup.register.Registers;
 import setup.world.Tile;
@@ -9,6 +10,7 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.stream.Stream;
 
@@ -40,12 +42,22 @@ public class World {
         Map heat = new Map(settings.size/8,settings.minHeatDropletSize,settings.maxHeatDropletSize,settings.heatDropletDensity,settings.seed);
         Map humidity = new Map(settings.size/8,settings.minHumidityDropletSize,settings.maxHumidityDropletSize,settings.humidityDropletDensity,settings.seed);
         Tile[][] tiles = new Tile[settings.size][settings.size];
+
+        WorldGenSettings.OreMapSettings[] oreSettings = new WorldGenSettings.OreMapSettings[]{settings.copper};
+        Map[] ores = (Map[])Arrays.stream(oreSettings).map(e->new Map(e,settings.size,settings.seed)).toArray();/*new Map[]{new Map(oreSettings[0], settings.size, settings.seed)};*/
+
         for (int i = 0; i < settings.size; i++) {
             for (int j = 0; j < settings.size; j++) {
 
                 //Place tiles according to biome type
                 tiles[i][j] = Tile.from(heat.get((int)i/8,(int)j/8),humidity.get(i/8,j/8), settings.thresholds);
 
+                //Now for the minerals the earth has to offer...
+                for (int k = 0; k < ores.length; k++) {
+                    if(ores[k].get(i,j)>0){
+                        tiles[i][j].getSub().add(new Ore(oreSettings[k].yield,getOreYield(s,oreSettings[k].minYield,oreSettings[k].maxYield)));
+                    }
+                }
 
 
                 //TODO
@@ -72,6 +84,10 @@ public class World {
 
     }
 
+    private static int getOreYield(Random s, int min, int max){
+        if(min>max)throw new IllegalArgumentException();
+        return s.nextInt(max-min)+min;
+    }
     private static void addDrip(Random s, Tile[][] tiles, WorldGenSettings settings) {
         Map lakefall = new Map(tiles.length, 20,50,1e-2,s.nextInt());
         for (int i = 0; i < tiles.length; i++) {

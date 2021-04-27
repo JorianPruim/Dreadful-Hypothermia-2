@@ -1,5 +1,8 @@
 package setup.worldgen;
 
+import objects.items.Item;
+import setup.register.Registers;
+
 import java.util.Random;
 
 /*
@@ -15,7 +18,9 @@ public class WorldGenSettings {
     public double heatDropletDensity = 5e-2;
     public double humidityDropletDensity = 5e-2;
     public Thresholds thresholds = Thresholds.get();
-    public int seed = (new Random()).nextInt();
+    public final int seed = (new Random()).nextInt();
+
+    public OreMapSettings copper = new OreMapSettings(2,4,1e-4, Registers.ITEM_COPPER.get(),100,500);
 
     private WorldGenSettings(){}
     public static WorldGenSettings getInstance(){
@@ -47,4 +52,23 @@ public class WorldGenSettings {
         public int minMediocreHeatThreshold = -3;
         public int maxMediocreHeatThreshold = 3;
     }
+
+    public static class OreMapSettings{
+        public int minDropSize;
+        public int maxDropSize;
+        public double density;
+        public Item yield;
+        public int minYield;
+        public int maxYield;
+        public OreMapSettings(int p1, int p2, double p3, Item p4, int p5, int p6){
+            this.minDropSize = p1;
+            this.maxDropSize = p2;
+            this.density = p3;
+            this.yield = p4;
+            this.minYield = p5;
+            this.maxYield = p6;
+        }
+    }
+
+
 }

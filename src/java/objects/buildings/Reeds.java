@@ -8,7 +8,7 @@ public class Reeds extends GeneratableBuilding {
     @Override
     public void primaryInteract(Player p) {
         this.destroy();
-        p.getInventory().addToInv(Registers.ITEMREEDS.get());
+        p.getInventory().addToInv(Registers.ITEM_REEDS.get());
     }
 
     @Override
