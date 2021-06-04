@@ -44,7 +44,7 @@ public class World {
         Tile[][] tiles = new Tile[settings.size][settings.size];
 
         WorldGenSettings.OreMapSettings[] oreSettings = new WorldGenSettings.OreMapSettings[]{settings.copper};
-        Map[] ores = (Map[])Arrays.stream(oreSettings).map(e->new Map(e,settings.size,settings.seed)).toArray();/*new Map[]{new Map(oreSettings[0], settings.size, settings.seed)};*/
+        Map[] ores = (Map[])Arrays.stream(oreSettings).map(e->new Map(e,settings.size,settings.seed)).toArray(Map[]::new);/*new Map[]{new Map(oreSettings[0], settings.size, settings.seed)};*/
 
         for (int i = 0; i < settings.size; i++) {
             for (int j = 0; j < settings.size; j++) {
@@ -55,7 +55,9 @@ public class World {
                 //Now for the minerals the earth has to offer...
                 for (int k = 0; k < ores.length; k++) {
                     if(ores[k].get(i,j)>0){
-                        tiles[i][j].getSub().add(new Ore(oreSettings[k].yield,getOreYield(s,oreSettings[k].minYield,oreSettings[k].maxYield)));
+                        if(tiles[i][j].getSub() != null) {
+                            tiles[i][j].getSub().add(new Ore(oreSettings[k].yield,getOreYield(s,oreSettings[k].minYield,oreSettings[k].maxYield)));
+                        }
                     }
                 }
 

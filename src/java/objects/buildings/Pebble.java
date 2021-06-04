@@ -10,7 +10,7 @@ public class Pebble extends GeneratableBuilding {
 
     @Override
     public void primaryInteract(Player p) {
-        if(p.getInventory().addToInv(Registers.ITEMPEBBLE.get()) && Math.random() < 0.3){
+        if(p.getInventory().addToInv(Registers.ITEM_PEBBLE.get()) && Math.random() < 0.3){
             this.destroy();
         }
     }

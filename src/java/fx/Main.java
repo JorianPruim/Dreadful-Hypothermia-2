@@ -1,24 +1,22 @@
 package fx;
 
-import javafx.geometry.Insets;
+import javafx.application.Application;
 import javafx.geometry.Orientation;
 import javafx.scene.Group;
+import javafx.scene.ImageCursor;
+import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.BlendMode;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import objects.buildings.Station;
-import objects.items.Item;
 import setup.crafting.Recipe;
 import setup.player.Inventory;
 import setup.player.Player;
-import javafx.application.Application;
-import javafx.scene.ImageCursor;
-import javafx.scene.Scene;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.image.Image;
-import javafx.stage.Stage;
 import setup.register.Registers;
 import setup.register.RegistryObject;
 import setup.world.Tile;
@@ -26,7 +24,10 @@ import setup.worldgen.World;
 import setup.worldgen.WorldGenSettings;
 import util.ImgFinder;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,6 +55,63 @@ public class Main extends Application {
                 private final Text entry = new Text();
 
 
+
+    /*
+    CURRENT:
+    GridPane root
+        GridPane field
+            ScrollPane mapField (unused?)
+                Group[] render
+                    ImageView tile
+                    ImageView building/entity
+        GridPane invDialog
+            TilePane invField
+                ImageView[] items
+            GridPane invData
+                Text invWeight
+                Text invSpace
+                Text invTotalOccupants
+        GridPane craftDialog
+            TilePane craftField
+                ImageView[] items
+        GridPane bldDialog
+            Pane bldInv (unused, WIP)
+            Pane bldData (unused, WIP)
+        GridPane envDialog
+            Pane playerEnvironment (WIP)
+            GridPane guideEntry
+                Text entry (rename -> guideEntryText?)
+
+
+    REFACTOR PROPOSAL:
+    GridPane root
+        Group field
+            GridPane tiles
+                ImageView[] tiles
+            (Node?)[] entityPanes
+                ImageView[] entities
+            GridPane builds
+                ImageView[] builds
+        GridPane invDialog
+            TilePane invField
+                ImageView[] items
+            GridPane invData
+                Text invWeight
+                Text invSpace
+                Text invTotalOccupants
+        GridPane craftDialog
+            TilePane craftField
+                ImageView[] items
+        GridPane bldDialog
+            Pane bldInv (unused, WIP)
+            Pane bldData (unused, WIP)
+        GridPane envDialog
+            Pane playerEnvironment (WIP)
+            GridPane guideEntry
+                Text entry (rename -> guideEntryText?)
+
+
+    */
     Border defaultBorder = new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderStroke.THIN));
 
 
@@ -391,7 +449,12 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-
+        try {
+            Thread.sleep(-100); //Time travel makes programs run so much faster
+        } catch (Exception ignored) {
+            //"handle" the IllegalArgumentException
+            //tachyon relativity do be hitting different tho
+        }
 
         launch(args);
     }

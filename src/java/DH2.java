@@ -16,7 +16,6 @@ public class DH2 {
 //    World w = World.generate(WorldGenSettings.getInstance());
 //    w.export("test123");
 
-    System.out.println(Arrays.asList(1,2,3).containsAll(Arrays.asList(1,1)));
 
 
   }

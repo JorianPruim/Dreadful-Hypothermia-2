@@ -25,6 +25,7 @@ public class Tile extends GameObject {
 
     public Tile(){
         super();
+        this.sub = new Subterrain();
     }
 
     private boolean isVisible;
