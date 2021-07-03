@@ -15,7 +15,8 @@ public class Player{
     private double yCoordinate;
     private final Inventory inv;
 
-    public double HP;
+    public double HP = 0; // The player has no life. The game was rigged from the start ect...
+    public double health = 100;
     public double reach = 3;
 
     public List<Knowledge> k = new ArrayList<>();

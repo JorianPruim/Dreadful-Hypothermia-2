@@ -17,8 +17,9 @@ public class WorldGenSettings {
     public int minHumidityDropletSize = 5;
     public double heatDropletDensity = 5e-2;
     public double humidityDropletDensity = 5e-2;
+    public int dropletBlur = 2;
     public Thresholds thresholds = Thresholds.get();
-    public final int seed = (new Random()).nextInt();
+    public final int seed = 0;//(new Random()).nextInt();
 
     public OreMapSettings copper = new OreMapSettings(2,4,1e-4, Registers.ITEM_COPPER.get(),100,500);
 

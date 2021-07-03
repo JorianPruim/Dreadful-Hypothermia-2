@@ -22,7 +22,6 @@ public abstract class Building extends GameObject{
     }
 
     public void onPrimaryInteract(Player p){
-        System.out.println(p.getXCoordinate() + " " +host.x);
         if(Math.pow(p.getXCoordinate()-host.x,2) + Math.pow(p.getYCoordinate()-host.y,2) < Math.pow(p.reach,2)){
             primaryInteract(p);
         }

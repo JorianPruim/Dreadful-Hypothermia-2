@@ -31,7 +31,6 @@ public class Inventory {
 
         Item total = getItemTotal();
         if(total.getWeight()+item.getWeight() > maxWeight || total.getSize()+item.getSize() > maxSize){
-            System.out.println(false);
             return false;
         }else{
             contents.add(item);
@@ -83,8 +82,7 @@ public class Inventory {
     }
 
     private Item getItemTotal() {
-        Item total = contents.stream().reduce(new Item(),(a,b)->new Item(a.getSize()+b.getSize(),a.getWeight()+b.getWeight()));
-        return total;
+        return contents.stream().reduce(new Item(),(a, b)->new Item(a.getSize()+b.getSize(),a.getWeight()+b.getWeight()));
     }
 
     public int getLength(){

@@ -273,6 +273,7 @@ public class Main extends Application {
     //Technically this method *should* take World renderedWorld as parameter too
 
     private void renderMap(int x, int y){
+        long start = System.currentTimeMillis();
         field.getChildren().clear();
         Group[][] plane = new Group[renderDistance*2][renderDistance*2];
         if(x-renderDistance<0){
@@ -296,6 +297,7 @@ public class Main extends Application {
 
             }
         }
+        System.out.println(System.currentTimeMillis()-start);
 
     }
     private void renderInventoryDialog(){
@@ -377,7 +379,7 @@ public class Main extends Application {
                 entry.setText(entrytext);
             } catch (FileNotFoundException e) {
                 try {
-                    BufferedReader reader = new BufferedReader(new FileReader(new File("src/assets/guide-entries/none.txt")));
+                    BufferedReader reader = new BufferedReader(new FileReader("src/assets/guide-entries/none.txt"));
                     String entrytext = reader.lines().reduce("",(a,b)->a+"\n"+b);
                     entry.setText(entrytext);
                 } catch (FileNotFoundException e2) {

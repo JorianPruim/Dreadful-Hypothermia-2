@@ -3,6 +3,7 @@ import objects.items.Item;
 import setup.player.Player;
 import setup.register.Registers;
 import setup.world.Tile;
+import setup.worldgen.Map;
 
 import java.io.*;
 import java.nio.file.Path;
@@ -15,10 +16,10 @@ public class DH2 {
 
 //    World w = World.generate(WorldGenSettings.getInstance());
 //    w.export("test123");
-
-
+      Map m = new Map(1000,5,10,5e-2,0);
+    System.out.println(Arrays.deepToString(m.getData()));
 
   }
 
-  private DH2(){};
+  private DH2(){}
 }

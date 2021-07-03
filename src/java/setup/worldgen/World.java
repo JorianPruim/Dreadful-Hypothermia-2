@@ -44,13 +44,28 @@ public class World {
         Tile[][] tiles = new Tile[settings.size][settings.size];
 
         WorldGenSettings.OreMapSettings[] oreSettings = new WorldGenSettings.OreMapSettings[]{settings.copper};
-        Map[] ores = (Map[])Arrays.stream(oreSettings).map(e->new Map(e,settings.size,settings.seed)).toArray(Map[]::new);/*new Map[]{new Map(oreSettings[0], settings.size, settings.seed)};*/
+        Map[] ores = Arrays.stream(oreSettings).map(e->new Map(e,settings.size,settings.seed)).toArray(Map[]::new);/*new Map[]{new Map(oreSettings[0], settings.size, settings.seed)};*/
 
         for (int i = 0; i < settings.size; i++) {
             for (int j = 0; j < settings.size; j++) {
 
                 //Place tiles according to biome type
-                tiles[i][j] = Tile.from(heat.get((int)i/8,(int)j/8),humidity.get(i/8,j/8), settings.thresholds);
+
+                double localHeat = 0, localHum = 0;
+                for (int k = -settings.dropletBlur; k <= settings.dropletBlur; k++) {
+                    for (int l = -settings.dropletBlur; l <= settings.dropletBlur; l++) {
+                        double f = Math.pow(Math.max(Math.abs(k), Math.abs(l)) + 1, 2);
+                        if((i+k>0&&j+l>0) && (i+k<settings.size && j+l<settings.size)) {
+                            localHeat += heat.get((i + k)/8, (j + l)/8) / f;
+                            localHum += humidity.get((i + k)/8, (j + l)/8) / f;
+
+                        }
+
+                    }
+                }
+
+                tiles[i][j] = Tile.from((int)localHeat,(int)localHum, settings.thresholds);
+
 
                 //Now for the minerals the earth has to offer...
                 for (int k = 0; k < ores.length; k++) {

@@ -32,9 +32,6 @@ public class Recipe extends RegistryObject {
     public boolean isCraftable(Player p, List<Station> nearStations){
         Inventory inv = p.getInventory();
         nearStations.add(null);
-        System.out.println(nearStations);
-        System.out.println(p.k);
-        System.out.println(inv);
         return nearStations.contains(station) && p.knows(pre) && inv.containsAll(in);
     }
 
